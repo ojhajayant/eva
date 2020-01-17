@@ -4,7 +4,7 @@ A1: Channels:
 
 	-These can either be the input image channels (R, G, B) or output-channels of trained kernels, which in
 	turn are collections of all possible instances (or appearances), of a specific (deterministic) feature 
-	type.Resulting	from running a kernel-convolution-operator, over the input channel or source image.
+	type.Resulting from running a kernel-convolution-operator, over the input channel or source image.
 
 Kernels: 
 
@@ -15,15 +15,15 @@ Q2: Why should we (nearly) always use 3x3 kernels?
 
 A2: Here are the reasons:
 
-	-We can make/emulate any bigger sized kernel (like 5x5, 7x7, 9x9, 11x11 etc) while having a far less 
-	number of parameters as compared to using the larger-sized kernel.
-	-An odd sized kernel like 3x3 also provides an "axis-of-symmetry" which in turn helps identifying an
-	edge easily.
-	-Addiitonally, the 3x3 works as a superset of all possible 2x2 kernels (by keeping the appropriate 
+	-We can make/emulate any bigger sized kernel (like 5x5, 7x7, 9x9, 11x11 etc) with 3x3 while having 
+	a far less number of parameters as compared to using any larger-sized kernel.
+	-An odd-sized kernel like 3x3 also provides an "axis-of-symmetry", which in turn helps identifying 
+	an edge easily.
+	-Additionally, the 3x3 works as a superset of all possible 2x2 kernels (by keeping the appropriate 
 	parameter values as zeros).Hence a 3x3 can be used by the network as a 2x2, if there is such need.
-	-Apart from above, one main reason for 3x3 to be used is its HW-acceleartion supported by the GPU 
-	vendors esp. NVIDIA, there is a spiralling cycle of user-community-adoption and corresponding 
-	vendor-support, in form of HW-acceleraiton.
+	-Apart from above, one main reason for 3x3 to be used, is its HW-acceleartion supported by the GPU 
+	vendors esp. NVIDIA.There is a spiralling-cycle of user-community-adoption and corresponding 
+	vendor-support, in form of HW-acceleraiton for 3x3 conv-operator.
 
 
 Q3: How many times do we need to perform 3x3 convolutions operations to reach close to 1x1 from 199x199 (type each layer output like 199x199 > 197x197...)
@@ -147,7 +147,7 @@ No: 99 | 3x3|(3x3)|1x1
 
 Q4: How are kernels initialized? 
 
-A4: To start with here are a few related points required before arriving at the answer on "how the kernels be initialized":
+A4: To start with here are a few related points required, before arriving at the answer on "how the kernels be initialized":
 - The inputs (x <sub>i</sub>'s) to any neuron, at a particular layer position, are all std-normalized i.e. for example, the 	  distribution for the pixel values will be centred at 0 mean with variance 1. And thus 95% of the values will be lying within
 [-2, +2] as shown in the diagram below:
 
@@ -157,4 +157,4 @@ A4: To start with here are a few related points required before arriving at the 
 
 ![alt text](https://github.com/ojhajayant/eva/blob/master/week1/tanh_derivative.PNG "Logo Title Text 1")
   
-- Hence, for kernel initialization, their parameters/weights should be chosen from standard normal gaussian distributions such that values picked are, intutively speaking, almost inversely proportional to the number of inputs.To be more accurate, with activation functions like tanh & sigmoid, we will be able to normalize the variance of each neuron’s output to 1, by having the parameter weights inititalize to values, picked from a distribution whose standard deviation is inverse of square root number of inputs i.e. sqrt(1/n). While for the ReLU, it is sugested to have these picked from a standard normal distribution with std. deviation of sqrt(2/n).
+- Hence, for kernel initialization, their parameters/weights should be chosen from standard normal gaussian distributions, such that values picked are, intutively speaking, almost inversely proportional to the number of inputs.To be more accurate, with activation functions like tanh & sigmoid, we will be able to normalize the variance of each neuron’s output to 1, by having the parameter weights inititalize to values, picked from a distribution whose standard deviation is inverse of square root of number of inputs i.e. sqrt(1/n). While for the ReLU, it is sugested to have these picked from a standard normal distribution, with std. deviation of sqrt(2/n).
