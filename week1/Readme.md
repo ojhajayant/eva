@@ -139,23 +139,13 @@ No: 99 | 3x3|(3x3)|1x1
 Q4: How are kernels initialized? 
 
 A4: To start with here are a few related points required before arriving at the answer on "how the kernels be initialized":
+- The inputs (x <sub>i</sub>'s) to any neuron, at a particular layer position, are all std-normalized i.e. for example, the 	  distribution for the pixel values will be centred at 0 mean with variance 1. And thus 95% of the values will be lying within
+[-2, +2] as shown in the diagram below:
 
-    -The inputs (x <sub>i</sub>'s) to any neuron, at a particular layer position, are all std-normalized i.e. for example, the 
-	  distribution for the pixel values will be centred at 0 mean with variance 1. And thus 95% of the values will be
-	  lying within [-2, +2] as shown in the diagram below:
-          ![alt text](https://github.com/ojhajayant/eva/blob/master/week1/input_dist.PNG "Logo Title Text 1")
+![alt text](https://github.com/ojhajayant/eva/blob/master/week1/input_dist.PNG "Logo Title Text 1")
    
-b. The weighted sum (Y = w1*x1 +w2*x2+...wn*xn) is passed onto each neuron's activation function (for ex: sigmoid, 
-   tanh, ReLU etc)
-   
-c. Esp for the activation functions like sigmoid  or tanh, is the above weighted sum is too high or too low, the 
-   corresponding gradient (as derivative of these functions) will approach zero and will cause the vanishing gradient
-   issue.a diagram for tanh & its derivative shown below:
-   "PUT AN APPROPRIATE DIGRAM HERE"
-   
-d. Hence, for kernel initialization, their parameters/weights should be chosen from standard normal distributions
-   such that values picked are, intutively speaking,  almost inversely proportional to the number of inputs.
-   To be more accurate, with activation functions like tanh & sigmoid, we will be able to normalize the variance
-   of each neuron’s output to 1, by having the parameter weights inititalize to values, picked from a distribution whose
-   standard deviation is inverse of square root number of inputs (i.e. sqrt(1/n). While for the ReLU, it is sugested
-   to have these picked from a standard normal distribution with std. deviatio  of sqrt(2/n)
+- The weighted sum (Y = w<sub>1</sub>x<sub>1</sub> + w<sub>2</sub>x<sub>2</sub>+...w<sub>n</sub>x<sub>n</sub>) is passed onto each neuron's activation function (for ex: sigmoid, tanh, ReLU etc) and, esp. for the activation functions like sigmoid  or tanh, if the above weighted sum is too high or too low, the corresponding gradient (as derivative of these functions) will approach zero and will cause the vanishing or exploding gradient issue.A diagram for tanh & its derivative shown below:
+
+![alt text](https://github.com/ojhajayant/eva/blob/master/week1/tanh_derivative.PNG "Logo Title Text 1")
+  
+- Hence, for kernel initialization, their parameters/weights should be chosen from standard normal gaussian distributions such that values picked are, intutively speaking, almost inversely proportional to the number of inputs.To be more accurate, with activation functions like tanh & sigmoid, we will be able to normalize the variance of each neuron’s output to 1, by having the parameter weights inititalize to values, picked from a distribution whose standard deviation is inverse of square root number of inputs i.e. sqrt(1/n). While for the ReLU, it is sugested to have these picked from a standard normal distribution with std. deviation of sqrt(2/n).
