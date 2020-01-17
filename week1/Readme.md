@@ -19,7 +19,7 @@ Here are the reasons:
 
 Q3: How many times do we need to perform 3x3 convolutions operations to reach close to 1x1 from 199x199 (type each layer output like 199x199 > 197x197...)
 
-A3: It should be 99 times, as shown in the follwoing table, derived from python code below:
+A3: It should be 99 times, as shown in the following table, derived from python code below:
 
 ```python
 def print_convs(chan_in=199):
@@ -138,11 +138,12 @@ No: 99 | 3x3|(3x3)|1x1
 
 Q4: How are kernels initialized? 
 
-A4: Putting in place a few assumptions as below:
-a. The inputs (xi's) to any neuron, at a particular layer position, are all std-normalized i.e. for example, the 
-   distribution for the pixel values will be centred at 0 mean with variance 1. And thus 95% of the values
-   will be lying within [-2, +2] as shown in the diagram below:
-   "PUT AN APPROPRIATE DIGRAM HERE"
+A4: To start with here are a few related points required before arriving at the answer on "how the kernels be initialized":
+
+    -The inputs (x <sub>i</sub>'s) to any neuron, at a particular layer position, are all std-normalized i.e. for example, the 
+	  distribution for the pixel values will be centred at 0 mean with variance 1. And thus 95% of the values will be
+	  lying within [-2, +2] as shown in the diagram below:
+          ![alt text](https://github.com/ojhajayant/eva/blob/master/week1/input_dist.PNG "Logo Title Text 1")
    
 b. The weighted sum (Y = w1*x1 +w2*x2+...wn*xn) is passed onto each neuron's activation function (for ex: sigmoid, 
    tanh, ReLU etc)
