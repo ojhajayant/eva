@@ -1,20 +1,28 @@
 Q1: What are Channels and Kernels (according to EVA)?
 
+A1: Channels: 
 
-Channels: These can either be the input image channels (R, G, B) or output-channels of trained kernels, which  in turn are collections of all possible instances (or appearances), of a specific (deterministic) feature type.Resulting from running a 
-          kernel-convolution-operator, over the input channel or source image.
-		 
-Kernels: These are feature-extractors, pattern-matchers, filters or, a specific 3x3 matrix operator, used in convolutional neural networks, to get feature-map channels as output, from an input image (or, channel).
+	-These can either be the input image channels (R, G, B) or output-channels of trained kernels, which in turn
+	are collections of all possible instances (or appearances), of a specific (deterministic) feature type.Resulting
+	from running a kernel-convolution-operator, over the input channel or source image.
 
+Kernels: 
 
+	-These are feature-extractors, pattern-matchers, filters or, a specific 3x3 matrix operator, used in convolutional
+	neural networks, to get feature-map channels as output, from an input image (or, channel).
 
 Q2: Why should we (nearly) always use 3x3 kernels?
-Here are the reasons:
-	1. We can make/emulate any bigger sized kernel (like 5x5, 7x7, 9x9, 11x11 etc) while having a far less number of parameters as compared to using the larger-sized kernel.
-	2. An odd sized kernel like 3x3 also provides an "axis-of-symmetry" which in turn helps identifying an edge easily.
-	3. Addiitonally, the 3x3 works as a superset of all possible 2x2 kernels (by keeping the appropriate parameter values as zeros).Hence a 3x3 can be used by the network as a 2x2, if there is such need.
-	4. Apart from above, one main reason for 3x3 to be used is its HW-acceleartion supported by the GPU vendors esp NVIDIA, there is a spiralling cycle of 
-	   user-community-adoption and corresponding vendor-support, in form of HW-acceleraiton.
+
+A2: Here are the reasons:
+
+	-We can make/emulate any bigger sized kernel (like 5x5, 7x7, 9x9, 11x11 etc) while having a far less number of 
+	parameters as compared to using the larger-sized kernel.
+	-An odd sized kernel like 3x3 also provides an "axis-of-symmetry" which in turn helps identifying an edge easily.
+	-Addiitonally, the 3x3 works as a superset of all possible 2x2 kernels (by keeping the appropriate parameter 
+	values as zeros).Hence a 3x3 can be used by the network as a 2x2, if there is such need.
+	-Apart from above, one main reason for 3x3 to be used is its HW-acceleartion supported by the GPU vendors 
+	esp NVIDIA, there is a spiralling cycle of user-community-adoption and corresponding vendor-support, in form of
+	HW-acceleraiton.
 
 
 Q3: How many times do we need to perform 3x3 convolutions operations to reach close to 1x1 from 199x199 (type each layer output like 199x199 > 197x197...)
