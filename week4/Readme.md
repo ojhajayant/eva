@@ -432,3 +432,50 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
 	  that aspect won't be explored further.
 	- But to achieve the required goal we will have to go for a capacity increase now, the next iteration
 	  tries to do the same.
+
+#### 5th NW:
+
+while retaining the same template for the Batch Normalization, Dropout and layering, we now increase the channels
+to follow the layering as given below.The value for 3% for Dropout was giving a better results as compared to other
+test-ranges from 1-10%. "|16|--|16-16|--|Transition|--|24-24|--|Transition|--|GAP|--|softmax-classifier|" as in the 
+table below
+
+Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
+---------------------|--------------|----------------------|----------------------
+`28x28x1`              | `(3x3x1)x16`   |      `26x26x16`  |      `3x3`
+` `              | `BN(16)`   |      ` `  |      ` `
+` `              | `Dropout(3%)`   |      ` `  |      ` `
+` `              | `ReLU`   |      ` `  |      ` `  
+**26x26x16**             | **(3x3x16)x16**  |      **24x24x16** |      **5x5** 
+** **             | **BN(16)**   |     ** **  |     ** **
+** **             | **Dropout(3%)**   |     ** **  |     ** **
+** **             | **ReLU**   |     ** **  |     ** **              
+**24x24x16**             | **(3x3x16)x16**  |      **22x22x16** |      **7x7** 
+** **             | **BN(16)**   |     ** **  |     ** **
+** **             | **Dropout(3%)**   |     ** **  |     ** **
+** **             | **ReLU**   |     ** **  |     ** **              
+*22x22x16*             |   *MP(2x2)*    |      *11x11x16*   |      *8x8*                      
+*11x11x16*             | *(1x1x16)x16*  |      *11x11x16*    |      *8x8*   
+** **            | *BN(16)*   |     * *   |     * * 
+** **             | *Dropout(3%)*   |     * *   |     * * 
+** **             | *ReLU*   |     * *   |     * *                         
+**11x11x16**             | **(3x3x16)x24**  |      **9x9x24** |      **12x12**  
+** **             | **BN(24)**   |     ** **  |     ** **
+** **             | **Dropout(3%)**   |     ** **  |     ** **
+** **             | **ReLU**   |     ** **  |     ** **                         
+**9x9x24**               | **(3x3x24)x24**  |      **7x7x24**  |      **16x16**   
+** **             | **BN(24)**   |     ** **  |     ** **
+** **             | **Dropout(3%)**   |     ** **  |     ** **
+** **             | **ReLU**   |     ** **  |     ** **                          
+*7x7x24*               | *(1x1x24)x10*  |      *7x7x10*    |      *16x16*   (NO RELU at the o/p of this layer)   
+7x7x10               | GAP  LAYER   |      1x10          |     
+
+![alt text](https://github.com/ojhajayant/eva/blob/master/week4/05_acc.PNG "Logo Title Text 1")
+![alt text](https://github.com/ojhajayant/eva/blob/master/week4/05_loss.PNG "Logo Title Text 1")
+
+
+	- First observation:  Total params: 14,112 (which is expected,given higher NW capacity) & the max 
+	  validation accuracy reaches: ~99.54%
+	- This case meets the required goal of getting an accuracy of 99.4% (appeared 5 times during
+	  training-epochs), the parameters: 14,112 < 20K (requirement) and came under 20 epochs.
+
