@@ -3,6 +3,7 @@ Group Members: Satya Nayak, Ramjee Ganti, Gourav Pattanaik, Jayant Ojha
 - total number of parameters---14,112
 - final validation/test accuracy---99.54%
 
+Please refer the [notebook](https://github.com/ojhajayant/eva/blob/master/week4/EVA4_S4_assignment.ipynb) 
 
 ## Logs:
 epoch=1 loss=0.24695727229118347 batch_id=937: 100%|█████████████████████████████████| 938/938 [00:17<00:00, 53.41it/s]
