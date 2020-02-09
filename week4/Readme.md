@@ -331,7 +331,7 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
 ![alt text](https://github.com/ojhajayant/eva/blob/master/week4/02_loss.PNG "Logo Title Text 1")
 
 
-	- First observation:  the parameters are 3,816(same as the 1st variant)
+	- First observation:  the parameters are 3,816(same as the 1st variant) max acc reached--98.26%
 	- The other results for this seem to be same at this point, but later on it has been found
 	  during the incremental evolution with BN, Dropout etc, the results with this variant weren't
-	  comparable to the first (and hence the 1st one itself has been taken thru the next set of changes)
+	  comparable to the first (and hence the 1st one itself, has been taken thru the next set of changes)
