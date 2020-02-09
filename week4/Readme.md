@@ -1,3 +1,5 @@
+Group Members: Satya Nayak, Ramjee Ganti, Gourav Pattanaik, Jayant Ojha
+
 - total number of parameters---14,112
 - final validation/test accuracy---99.54%
 
