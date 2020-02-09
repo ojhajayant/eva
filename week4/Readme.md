@@ -307,3 +307,31 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
 	  Batch-Norm, Dropout, what effects could be seen?  
 	- Meantime, we will explore the 2nd variant below as well to see where it stands.
 
+#### 2nd NW: 
+this is just the GAP->1x1(FC) variant...this variant is not being taken forward for incremental changes (as it was found to be lagging behind as compared to the 1x1->GAP variant discussed earlier)
+
+Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
+---------------------|--------------|----------------------|----------------------
+`28x28x1`              | `(3x3x1)x8`   |      `26x26x8`  |      `3x3`
+` `              | `ReLU`   |      ` `  |      ` `  
+**26x26x8**             | **(3x3x8)x8**  |      **24x24x8** |      **5x5**  
+** **             | **ReLU**   |     ** **  |     ** **      
+**24x24x8**             | **(3x3x8)x16**  |      **22x22x16** |      **7x7**  
+** **             | **ReLU**   |     ** **  |     ** **      
+*22x22x16*             |   *MP(2x2)*    |      *11x11x16*   |      *8x8*                      
+*11x11x16*             | *(1x1x16)x8*  |      *11x11x8*    |      *8x8* 
+ ** **             | *ReLU*   |     * *   |     * *      
+**11x11x8**             | **(3x3x8)x8**  |      **9x9x8** |      **12x12**
+** **             | **ReLU**   |     ** **  |     ** **   
+**9x9x8**               | **(3x3x8)x16**  |      **7x7x16**  |      **16x16** (NO RELU at the o/p of this layer)            
+7x7x16               | GAP  LAYER   |      1x16          |  (the output, though can be written as 1x1x16, but is 1-D, i.e.1x16)
+*1x1x16*               | *(1x1x16)x10*  |      *1x10*    | (behaves as fully-connected layer for the 1-D data from GAP)
+
+![alt text](https://github.com/ojhajayant/eva/blob/master/week4/02_acc.PNG "Logo Title Text 1")
+![alt text](https://github.com/ojhajayant/eva/blob/master/week4/02_loss.PNG "Logo Title Text 1")
+
+
+	- First observation:  the parameters are 3,816(same as the 1st variant)
+	- The other results for this seem to be same at this point, but later on it has been found
+	  during the incremental evolution with BN, Dropout etc, the results with this variant weren't
+	  comparable to the first (and hence the 1st one itself has been taken thru the next set of changes)
