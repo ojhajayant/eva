@@ -302,7 +302,7 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
 	- First observation: the parameters are 3,816 the max validation accuracy reached: ~98.25%
 	- The logs and accuracy plot above show that there is some overfitting in terms of in terms of 
 	  the accuracy plot, both the train and test accuracies seem to be running in close step.With not
-	  much "potential" for the test/validation accuracy to in cerase, with a corresponding increase
+	  much "potential" for the test/validation accuracy to increase, with a corresponding increase
 	  in training accuracy. 
 	- Additionally, with required 20 epochs, the network capacity seems to be not sufficient to meet
 	  the goal. 
@@ -375,8 +375,8 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
 	  & the max validation accuracy reaches: ~98.94%
 	- we got little better in terms of the reached accuracy but expectedly, far from the required accuracy
 	  goal.
-	- Also in terms of the accuracy plot & logs, we could see that the further potential for increase 
-	  for the validation accuracy has not yet opened up (it is overfitting...i.e. the training accuracy
+	- Also in terms of the accuracy plot & logs, we could see that the further 'potential-to-increase'
+	  for the validation accuracy, has not yet opened up (it is overfitting...i.e. the training accuracy
 	  has reached 99.08% but the validation acuracy still under ~98.8%, hence not much scope for further
 	  increase with a corresponding increase in training accuracy )
 	- just like the earlier NWs, this one can't meet the goal within the required 20 epochs(capacity 
