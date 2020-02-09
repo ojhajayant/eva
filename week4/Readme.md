@@ -271,3 +271,39 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
 ** **             | **ReLU**   |     ** **  |     ** **                          
 *7x7x24*               | *(1x1x24)x10*  |      *7x7x10*    |      *16x16*   (NO RELU at the o/p of this layer)   
 7x7x10               | GAP  LAYER   |      1x10          |     
+
+
+#### First NW:
+
+Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
+---------------------|--------------|----------------------|----------------------
+`28x28x1`              | `(3x3x1)x8`   |      `26x26x8`  |      `3x3`|      
+` `              | `ReLU`   |      ` `  |      ` ` 
+**26x26x8**             | **(3x3x8)x8**  |      **24x24x8** |      **5x5**
+** **             | **ReLU**   |     ** **  |     ** **      
+**24x24x8**             | **(3x3x8)x16**  |      **22x22x16** |      **7x7**  
+** **             | **ReLU**   |     ** **  |     ** **                       
+*22x22x16*             |   *MP(2x2)*    |      *11x11x16*   |      *8x8*                      
+*11x11x16*             | *(1x1x16)x8*  |      *11x11x8*    |      *8x8* 
+** **             | *ReLU*   |     * *   |     * *
+**11x11x8**             | **(3x3x8)x8**  |      **9x9x8** |      **12x12** 
+** **             | **ReLU**   |     ** **  |     ** **   
+**9x9x8**               | **(3x3x8)x16**  |      **7x7x16**  |      **16x16** 
+** **             | **ReLU**   |     ** **  |     ** **    
+*7x7x16*               | *(1x1x16)x10*  |      *7x7x10*    |      *16x16*  (NO RELU at the o/p of this layer)    
+7x7x10               | GAP  LAYER   |      1x10          |
+
+![alt text](https://github.com/ojhajayant/eva/blob/master/week4/01_acc.PNG "Logo Title Text 1")
+![alt text](https://github.com/ojhajayant/eva/blob/master/week4/01_loss.PNG "Logo Title Text 1")
+
+	- First observation: the parameters are 3,816 the max validation accuracy reached: ~98.25%
+	- The logs and accuracy plot above show that there is some overfitting in terms of in terms of 
+	  the accuracy plot, both the train and test accuracies seem to be running in close step.With not
+	  much "potential" for the test/validation accuracy to in cerase, with a corresponding increase
+	  in training accuracy. 
+	- Additionally, with required 20 epochs, the network capacity seems to be not sufficient to meet
+	  the goal. 
+	- But, despite an urgent need for increased channels, we would still like to see, if with added
+	  Batch-Norm, Dropout, what effects could be seen?  
+	- Meantime, we will explore the 2nd variant below as well to see where it stands.
+
