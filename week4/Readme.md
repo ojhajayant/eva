@@ -335,3 +335,46 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
 	- The other results for this seem to be same at this point, but later on it has been found
 	  during the incremental evolution with BN, Dropout etc, the results with this variant weren't
 	  comparable to the first (and hence the 1st one itself, has been taken thru the next set of changes)
+
+####3rd NW: 
+
+added Batch Normalization at each layer(we should expect some increase in accuracy in this case)
+
+Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
+---------------------|--------------|----------------------|----------------------
+`28x28x1`              | `(3x3x1)x8`   |      `26x26x8`  |      `3x3`|  
+` `              | `BN(8)`   |      ` `  |      ` `
+` `              | `ReLU`   |      ` `  |      ` ` 
+**26x26x8**             | **(3x3x8)x8**  |      **24x24x8** |      **5x5**
+** **             | **BN(8)**   |     ** **  |     ** **
+** **             | **ReLU**   |     ** **  |     ** **      
+**24x24x8**             | **(3x3x8)x16**  |      **22x22x16** |      **7x7** 
+** **             | **BN(16)**   |     ** **  |     ** **
+** **             | **ReLU**   |     ** **  |     ** **                       
+*22x22x16*             |   *MP(2x2)*    |      *11x11x16*   |      *8x8*                      
+*11x11x16*             | *(1x1x16)x8*  |      *11x11x8*    |      *8x8* 
+** **            | *BN(8)*   |     * *   |     * * 
+** **             | *ReLU*   |     * *   |     * *
+**11x11x8**             | **(3x3x8)x8**  |      **9x9x8** |      **12x12** 
+** **             | **BN(8)**   |     ** **  |     ** **
+** **             | **ReLU**   |     ** **  |     ** **   
+**9x9x8**               | **(3x3x8)x16**  |      **7x7x16**  |      **16x16** 
+** **             | **BN(16)**   |     ** **  |     ** **
+** **             | **ReLU**   |     ** **  |     ** **    
+*7x7x16*               | *(1x1x16)x10*  |      *7x7x10*    |      *16x16*  (NO RELU at the o/p of this layer)    
+7x7x10               | GAP  LAYER   |      1x10          |
+
+![alt text](https://github.com/ojhajayant/eva/blob/master/week4/03_acc.PNG "Logo Title Text 1")
+![alt text](https://github.com/ojhajayant/eva/blob/master/week4/03_loss.PNG "Logo Title Text 1")
+
+
+	- First observation:  Total params: 3,944 (which is expectedly, higher as compared to the 1st NW) 
+	  & the max validation accuracy reaches: ~98.94%
+	- we got little better in terms of the reached accuracy but expectedly, far from the required accuracy
+	  goal.
+        - Also in terms of the accuracy plot & logs, we could see that the further potential for increase 
+	  for the validation accuracy has not yet opened up (it is overfitting...i.e. the training accuracy
+	  has reached 99.08% but the validation acuracy still under ~98.8%, hence not much scope for further
+	  increase with a corresponding increase in training accuracy )
+	- just like the earlier NWs, this one can't meet the goal within the required 20 epochs(capacity 
+	  boost required)
