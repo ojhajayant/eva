@@ -375,7 +375,7 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
 	  & the max validation accuracy reaches: ~98.94%
 	- we got little better in terms of the reached accuracy but expectedly, far from the required accuracy
 	  goal.
-	- Also in terms of the accuracy plot & logs, we could see that the further 'potential-to-increase'
+	- Also in terms of the accuracy plot & logs, we could see that the further 'potential-to-increase',
 	  for the validation accuracy, has not yet opened up (it is overfitting...i.e. the training accuracy
 	  has reached 99.08% but the validation acuracy still under ~98.8%, hence not much scope for further
 	  increase with a corresponding increase in training accuracy )
