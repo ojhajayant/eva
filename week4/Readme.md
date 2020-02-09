@@ -88,7 +88,7 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
 *1x1x16*               | *(1x1x16)x10*  |      *1x10*    | (behaves as fully-connected layer for the 1-D data from GAP)
 
 
-    v. As mentioned earlier, have found better results for the 1x1->GAP option above, rather than GAP->1x1(or, FC)
+    v. As mentioned earlier, have found better results for the 1x1->GAP option, rather than GAP->1x1(or, FC)
        hence the increments of Batch Normalization, dropout etc are made with this arrangement.
        
     vi. At the end, following Architecture (same as the first-table above, but with increased number of channels,
