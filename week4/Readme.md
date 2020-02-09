@@ -336,7 +336,7 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
 	  during the incremental evolution with BN, Dropout etc, the results with this variant weren't
 	  comparable to the first (and hence the 1st one itself, has been taken thru the next set of changes)
 
-####3rd NW: 
+#### 3rd NW: 
 
 added Batch Normalization at each layer(we should expect some increase in accuracy in this case)
 
@@ -378,3 +378,57 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
 	  increase with a corresponding increase in training accuracy )
 	- just like the earlier NWs, this one can't meet the goal within the required 20 epochs(capacity 
 	  boost required)
+
+#### 4th NW:
+
+added Dropout as well at each layer apart from the BN(we should expect lesser overfitting i.e. an increase in the 
+"potential" to increase validation accuracy with corresponding increase in training-accuracy) i.e. a gap opens up. 
+The value for 3% for Dropout was giving a better results as compared to other tested-ranges from 1-10%.
+
+Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
+---------------------|--------------|----------------------|----------------------
+`28x28x1`              | `(3x3x1)x8`   |      `26x26x8`  |      `3x3`|  
+` `              | `BN(8)`   |      ` `  |      ` `
+` `              | `Dropout(3%)`   |      ` `  |      ` `
+` `              | `ReLU`   |      ` `  |      ` ` 
+**26x26x8**             | **(3x3x8)x8**  |      **24x24x8** |      **5x5**
+** **             | **BN(8)**   |     ** **  |     ** **
+** **             | **Dropout(3%)**   |     ** **  |     ** **
+** **             | **ReLU**   |     ** **  |     ** **      
+**24x24x8**             | **(3x3x8)x16**  |      **22x22x16** |      **7x7** 
+** **             | **BN(16)**   |     ** **  |     ** **
+** **             | **Dropout(3%)**   |     ** **  |     ** **
+** **             | **ReLU**   |     ** **  |     ** **                       
+*22x22x16*             |   *MP(2x2)*    |      *11x11x16*   |      *8x8*                      
+*11x11x16*             | *(1x1x16)x8*  |      *11x11x8*    |      *8x8* 
+** **            | *BN(8)*   |     * *   |     * * 
+** **             | *Dropout(3%)*   |     * *   |     * * 
+** **             | *ReLU*   |     * *   |     * *
+**11x11x8**             | **(3x3x8)x8**  |      **9x9x8** |      **12x12** 
+** **             | **BN(8)**   |     ** **  |     ** **
+** **             | **Dropout(3%)**   |     ** **  |     ** **
+** **             | **ReLU**   |     ** **  |     ** **   
+**9x9x8**               | **(3x3x8)x16**  |      **7x7x16**  |      **16x16** 
+** **             | **BN(16)**   |     ** **  |     ** **
+** **             | **Dropout(3%)**   |     ** **  |     ** **
+** **             | **ReLU**   |     ** **  |     ** **    
+*7x7x16*               | *(1x1x16)x10*  |      *7x7x10*    |      *16x16*  (NO RELU at the o/p of this layer)    
+7x7x10               | GAP  LAYER   |      1x10          |
+
+![alt text](https://github.com/ojhajayant/eva/blob/master/week4/04_acc.PNG "Logo Title Text 1")
+![alt text](https://github.com/ojhajayant/eva/blob/master/week4/04_loss.PNG "Logo Title Text 1")
+
+
+	- First observation:  Total params: 3,944 (which is expectedly,same as compared to the last NW as
+	  dropout doesn't add params) & the max validation accuracy reaches: ~98.4% (though this seems almost
+	  comparable to the achieved max in last iteration, but in case of adding Dropout, we have overcome the
+	  overfitting issue, by opening up the gap between training and test accuracies...i.e. now we can see 
+	  that the test accuracy value like ~98% is achieved while the training accuracy is still at ~96%, which
+	  has opened up the potential for further increase in the validation accuracy, given we have a required 
+	  number of epochs and NW-capacity with us.
+	- Also in terms of the accuracy plot, both the train and test accuracies seem to be maintaining almost 
+	  consistent gap (training accuracy growth is looking stagnant though, but some scope is open)
+	- As a final step for this architecture-option we are required to the given Learning rate value hence 
+	  that aspect won't be explored further.
+	- But to achieve the required goal we will have to go for a capacity increase now, the next iteration
+	  tries to do the same.
