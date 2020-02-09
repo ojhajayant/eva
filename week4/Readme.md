@@ -155,7 +155,7 @@ Fix up the required architecture/layer-organization...in terms of choosing the n
  1. One initial,"image-conv2d" layer at the begining, to convolve over the "original image" channels, am 
     initially providing 8 number of kernels for this 'separate' layer (which feeds in to the next  
     "2-conv2d-layer-block").It needs to be noted that this 1 initial layer + The 2 following layers(for
-    "2-conv2d-layer-block") provide receptive field of 7x7 pixels(3->5->7) sufficient for the MNIST datset's
+    "2-conv2d-layer-block") provide receptive field of 7x7 pixels(3->5->7) sufficient for the MNIST dataset's
     edges & gradient generation.In this evolution-experiment, kernel numbers numbers started out as 8 initially, 
     but in the final architecture(which met the requirements) it became 16.
     
@@ -163,7 +163,7 @@ Fix up the required architecture/layer-organization...in terms of choosing the n
  2. conv2d-BLOCK with 2 layers (in this case):
     This block will be placed after the first "image-conv2d" layer, and one more instance of this block, will 
     also follow the transition-block (explained below) later.
-    In this evolution-experiment, kernel numbers numbers initially started out as (8-16) for the 'first-2-layer-block'
+    In this evolution-experiment, kernel numbers initially started out as (8-16) for the 'first-2-layer-block'
     & (8-16) for the 'second-2-layer-block', but in the final architecture(which met the requirements) it
     became (16-16) for the 'first-2-layer-block' & (24-24) for the 'second-2-layer-block'.
     
