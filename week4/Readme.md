@@ -172,7 +172,7 @@ Fix up the required architecture/layer-organization...in terms of choosing the n
     1st transition layer, with both max-pool(k=2,s=2) and a-1x1-feature-merger kernel, following the
     'first-2-layer-block'.
     2nd transition layer, towards the end (following the 2nd conv2d-block) which does NOT have
-    the maxpool (i.e. just has one 1x1-feature-merger operator), and followed by the Global
+    the maxpool (i.e. just has 1x1-feature-merger operator), and followed by the Global
     Average Pooling (GAP) layer leading upto the Softmax layer.    
     Here, at the end, we have another 'organization-possibility' i.e. we can also have a GAP layer followed
     by a 1x1 operator (which actually resembles a fully-connected(FC) layer in this case. (Note: for my 
