@@ -431,7 +431,7 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
 	  number of epochs and NW-capacity with us.
 	- Also in terms of the accuracy plot, both the train and test accuracies seem to be maintaining almost 
 	  consistent gap (training accuracy growth is looking stagnant though, but some scope is open)
-	- As a final step for this architecture-option we are required to the given Learning rate value hence 
+	- As for this architecture-option we are required to stick-to the given Learning rate value, hence 
 	  that aspect won't be explored further.
 	- But to achieve the required goal we will have to go for a capacity increase now, the next iteration
 	  tries to do the same.
