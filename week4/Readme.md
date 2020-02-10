@@ -479,6 +479,6 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
 
 	- First observation:  Total params: 14,112 (which is expected,given higher NW capacity) & the max 
 	  validation accuracy reaches: ~99.54%
-	- This case meets the required goal of getting an accuracy of >= 99.4% (appeared 5 times during
+	- This case meets the required goal of getting an accuracy of >= 99.4% (appeared 5-6 times during
 	  training-epochs), the parameters: 14,112 < 20K (requirement) and came under 20 epochs.
 
