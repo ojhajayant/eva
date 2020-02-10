@@ -260,7 +260,7 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
 ** **             | **Dropout(3%)**   |     ** **  |     ** **
 ** **             | **ReLU**   |     ** **  |     ** **              
 *22x22x16*             |   *MP(2x2)*    |      *11x11x16*   |      *8x8*                      
-*11x11x16*             | *(1x1x16)x16*  |      *11x11x16*    |      *8x8*   
+*11x11x16*             | *(1x1x16)x16*  |      *11x11x16*    |      *8x8*   (Here  a conversion from 16 input channels to -> 16 output channels, using 1x1 might look like an 'oddity', but as 1x1 is a feature-merging operator, which works along-with BackProp, to get "contextually-linked" channels as outputs for the upstream layers (from the 'scattered' lower level features)
 ** **            | *BN(16)*   |     * *   |     * * 
 ** **             | *Dropout(3%)*   |     * *   |     * * 
 ** **             | *ReLU*   |     * *   |     * *                         
@@ -458,7 +458,7 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
 ** **             | **Dropout(3%)**   |     ** **  |     ** **
 ** **             | **ReLU**   |     ** **  |     ** **              
 *22x22x16*             |   *MP(2x2)*    |      *11x11x16*   |      *8x8*                      
-*11x11x16*             | *(1x1x16)x16*  |      *11x11x16*    |      *8x8*   
+*11x11x16*             | *(1x1x16)x16*  |      *11x11x16*    |      *8x8* (Here  a conversion from 16 input channels to -> 16 output channels, using 1x1 might look like an 'oddity', but as 1x1 is a feature-merging operator, which works along-with BackProp, to get "contextually-linked" channels as outputs for the upstream layers (from the 'scattered' lower level features)  
 ** **            | *BN(16)*   |     * *   |     * * 
 ** **             | *Dropout(3%)*   |     * *   |     * * 
 ** **             | *ReLU*   |     * *   |     * *                         
