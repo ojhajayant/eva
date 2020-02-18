@@ -25,7 +25,7 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
 *6x6x16*               | *(3x3x16)x20*  |      *6x6x20*  |      *22x22* (**Note 1:** o/p channels should be generated after *padding* here, hence you see *6x6* rather than 4x4.In terms of accuracy for 4x4 vs 6x6, it comes out to be better for 6x6, hence padding recommended here.   **Note 2:** also note that this 4x4 vs 6x6 has significance for the upcoming grad-cam assisted visualizations)
 ** **             | *ReLU*   |     ** **  |    ** **   
 6x6x20               | GAP  LAYER (kernel_size=(6,6)   |      1x1x20          | `32x32` (22 + (6-1)x2 = 32) **OUTPUT BLOCK** [GAP + 1 conv2d 1x1 layer]
-`1x1x20`               | `(1x1x20)x10`  |      `1x1x10`    |      `16x16`  (NO RELU at the o/p of this layer) 1 conv2d 1x1 layer
+`1x1x20`               | `(1x1x20)x10`  |      `1x1x10`    |      ` `  (NO RELU at the o/p of this layer) 1 conv2d 1x1 layer
 ` `             | `log_SoftMax`   |     ` `  |     ` ` 
 
  above has 4 "components":
@@ -109,7 +109,7 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
 ** **            | *BN(20)*   |     * *   |     * * 
 ** **             | *ReLU*   |     ** **  |    ** **   
 6x6x20               | GAP  LAYER (kernel_size=(6,6)   |      1x1x20          | `32x32` (22 + (6-1)x2 = 32) **OUTPUT BLOCK** [GAP + 1 conv2d 1x1 layer]
-`1x1x20`               | `(1x1x20)x10`  |      `1x1x10`    |      `16x16`  (NO RELU at the o/p of this layer) 
+`1x1x20`               | `(1x1x20)x10`  |      `1x1x10`    |      ` `  (NO RELU at the o/p of this layer) 
 ` `             | `log_SoftMax`   |     ` `  |     ` ` 
 
 ###### Targets:
@@ -172,7 +172,7 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
 ** **             | *Dropout(10%)*   |     * *   |     * * 
 ** **             | *ReLU*   |     ** **  |    ** **   
 6x6x20               | GAP  LAYER (kernel_size=(6,6)   |      1x1x20          | `32x32` (22 + (6-1)x2 = 32)**OUTPUT BLOCK** [GAP + 1 conv2d 1x1 layer]
-`1x1x20`               | `(1x1x20)x10`  |      `1x1x10`    |      `16x16`  (NO RELU at the o/p of this layer) 
+`1x1x20`               | `(1x1x20)x10`  |      `1x1x10`    |      ` `  (NO RELU at the o/p of this layer) 
 ` `             | `log_SoftMax`   |     ` `  |     ` ` 
 
 ###### Targets:
