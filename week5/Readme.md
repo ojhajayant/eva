@@ -124,7 +124,7 @@ Input Channels/Image  |  Conv2d/Transform      | Output Channels | RF
   
 ![alt text](https://github.com/ojhajayant/eva/blob/master/week5/02_acc_loss.PNG "Logo Title Text 1")
 ##### Analysis:
-	- We see a lot better accuracy as we have touched 99.4 and in many peochs we are > 99.3%
+	- We see a lot better accuracy as we have touched 99.4 and in many epochs we are > 99.3%
 	- But, we still have overfitting and we would hence like to use some regularization for our
 	  3rd attempt (in form of using Dropout)
 
