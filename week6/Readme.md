@@ -1,3 +1,7 @@
+Group Members: Satya Nayak, Ramjee Ganti, Gourav Pattanaik, Jayant Ojha
+
+Please refer the [notebook](https://github.com/ojhajayant/eva/blob/master/week6/S6_assignment.ipynb) for this assignment solution.
+
 ### Finding optimum values for L1-penalty-weight & L2-weight-decay
     - The appropriate values for l1 & l2 related weights were found after coarsely sweeping
       thru values from 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001 first.
@@ -12,3 +16,4 @@
     - For individual models, either or both of them will be enabled/disbaled using some
       related flags defined ahead in this notebook
     - Please note, L2 regaularization implementation is in-built with torch. 
+    - The experiment results for above sweeps are  [here](https://github.com/ojhajayant/eva/blob/master/week6/S5_assignment_3rd_attempt_40EPOCH_l1_only_experiments.ipynb) & [here](https://github.com/ojhajayant/eva/blob/master/week6/S5_assignment_3rd_attempt_40EPOCH_l2_only_experiments.ipynb)
