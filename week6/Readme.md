@@ -16,4 +16,4 @@ Please refer the [notebook](https://github.com/ojhajayant/eva/blob/master/week6/
     - For individual models, either or both of them will be enabled/disbaled using some
       related flags defined ahead in this notebook
     - Please note, L2 regaularization implementation is in-built with torch. 
-    - The experiment results for above sweeps are  [here](https://github.com/ojhajayant/eva/blob/master/week6/S5_assignment_3rd_attempt_40EPOCH_l1_only_experiments.ipynb) & [here](https://github.com/ojhajayant/eva/blob/master/week6/S5_assignment_3rd_attempt_40EPOCH_l2_only_experiments.ipynb)
+The experiment results for above sweeps are  [here](https://github.com/ojhajayant/eva/blob/master/week6/S5_assignment_3rd_attempt_40EPOCH_l1_only_experiments.ipynb) & [here](https://github.com/ojhajayant/eva/blob/master/week6/S5_assignment_3rd_attempt_40EPOCH_l2_only_experiments.ipynb)
