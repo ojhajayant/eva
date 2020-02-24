@@ -23,3 +23,8 @@ The experiment results for above sweeps are  [here](https://github.com/ojhajayan
 
 ![alt text](https://github.com/ojhajayant/eva/blob/master/week6/test_losses.PNG "Logo Title Text 1")
 
+###  misclassified images:
+![alt text](https://github.com/ojhajayant/eva/blob/master/week6/Predicted%20_Vs_%20Actual_Without_both_%20L1_n_L2.PNG "Logo Title Text 1")
+![alt text](https://github.com/ojhajayant/eva/blob/master/week6/Predicted%20_Vs_%20Actual_With_L1_alone.PNG "Logo Title Text 1")
+![alt text](https://github.com/ojhajayant/eva/blob/master/week6/Predicted%20_Vs_%20Actual_With_L2_alone.PNG "Logo Title Text 1")
+![alt text](https://github.com/ojhajayant/eva/blob/master/week6/Predicted%20_Vs_%20Actual_With_both_%20L1_n_L2.PNG "Logo Title Text 1")
