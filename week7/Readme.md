@@ -3,7 +3,7 @@ Please refer [this location](https://github.com/ojhajayant/eva/tree/master/week7
 Following shows the model, based on the C1-T1-C2-T2-C3-T3-C4-O template, and has a RF = 66x66 (greater than 44x44 as required) with ~58K parameters.
 
     - Each layer here uses Depth-wise Separable Convolution (hence the o/p capacity for each
-      can be increased with correspondingly, lesser parameters
+      can be increased while keeping quite lesser parameters as compared to "tradional" 3x3 conv2d.
     - For reaching the required edges and gradient @ 7x7 (and for the overall NW to have a 
       RF > 44) the dilation for the 2nd layer is kept as 2.
     - Rest all of the layers have a dilation of 1.
