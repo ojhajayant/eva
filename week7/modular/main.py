@@ -32,7 +32,7 @@ args = cfg.parser.parse_args()
 
 
 def main():
-    print("The config used for this run are @ {}".format(os.path.join(args.prefix, 'config_params.txt')))
+    print("The config used for this run are being saved @ {}".format(os.path.join(args.prefix, 'config_params.txt')))
     write(vars(args), os.path.join(args.prefix, 'config_params.txt'))
     mean, std = get_dataset_mean_std()
     train_cifar10, test_cifar10, train_loader, test_loader = preprocess_data((mean[0], mean[1], mean[2]), (std[0], std[1], std[2]))
