@@ -10,11 +10,11 @@ Following shows the model, based on the C1-T1-C2-T2-C3-T3-C4-O template, and has
     - The C4-block is a "capacity-booster" element, providing 64 feature points for the 
       fully-connected layer & log-softmax to classify across 10 classes.
 
-![alt text](https://github.com/ojhajayant/DataScienceUtils/blob/master/eva/model_dgm.png "Logo Title Text 1")
+![alt text](https://github.com/ojhajayant/eva/blob/master/week7/model_dgm.png "Logo Title Text 1")
 
 The directory-structure for the code is as  below:
 
-![alt text](https://github.com/ojhajayant/DataScienceUtils/blob/master/eva/consolidated/dir_struct.png "Logo Title Text 1")
+![alt text](https://github.com/ojhajayant/eva/blob/master/week7/dir_struct.png "Logo Title Text 1")
 ```
 0. cfg.py: This has the default and/or user-supplied top-level configuration values & global-vars.
 1. main.py: This is the main script to be run to either train or make inference.
@@ -257,11 +257,11 @@ Test set: Average loss: 0.6315, Accuracy: 7942/10000 (79.42%)
 ```
 Here are example confusion-matrix and classification-report:
 
-![alt text](https://github.com/ojhajayant/DataScienceUtils/blob/master/eva/classification_matrix.PNG "Logo Title Text 1")
+![alt text](https://github.com/ojhajayant/eva/blob/master/week7/classification_matrix.PNG "Logo Title Text 1")
 
 Here are 3 groups of mislabelled 10-class samples from the test-dataset:
 
-![alt text](https://github.com/ojhajayant/DataScienceUtils/blob/master/eva/mislabelled_cifar.PNG "Logo Title Text 1")
+![alt text](https://github.com/ojhajayant/eva/blob/master/week7/mislabelled_cifar.PNG "Logo Title Text 1")
 
       
 While the overall code is structered as demanded, but some of initial experimental results can be found 
