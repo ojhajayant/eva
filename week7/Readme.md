@@ -257,6 +257,10 @@ Loss=0.8436259031295776 Batch_id=781 Accuracy=87.28: 100%|███████�
 Test set: Average loss: 0.6315, Accuracy: 7942/10000 (79.42%)
 
 ```
+Here are the test-loss and test-accuracy plots over a 40-epoch-run:
+
+![alt text](https://github.com/ojhajayant/eva/blob/master/week7/test_loss_acc.PNG "Logo Title Text 1")
+
 Here are example confusion-matrix and classification-report:
 
 ![alt text](https://github.com/ojhajayant/eva/blob/master/week7/classification_matrix.PNG "Logo Title Text 1")
