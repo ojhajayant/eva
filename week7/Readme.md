@@ -7,10 +7,7 @@ Following shows the model based on the C1-T1-C2-T2-C3-T3-C4-O template and has a
     - Rest all of the layers have a dilation of 1.
     - The C4-block is a "capacity-booster" element, providing 64 feature points for the 
       fully-connected layer & log-softmax to classify across 10 classes.
-      
-While the overall code is structered as demanded, but some of initial experimental results can be found 
- @ the [notebook](https://github.com/ojhajayant/DataScienceUtils/blob/master/eva/S6_assignment_expt_01_with_depthwise_separable_conv2d_02.ipynb) & also  [here](https://github.com/ojhajayant/DataScienceUtils/blob/master/eva/S6_assignment_expt_01.ipynb) &  [here](https://github.com/ojhajayant/DataScienceUtils/blob/master/eva/S6_assignment_expt_01_with_depthwise_separable_conv2d_01.ipynb)
- 
+
 ![alt text](https://github.com/ojhajayant/DataScienceUtils/blob/master/eva/model_dgm.png "Logo Title Text 1")
 
 The directory-structure for the code is as  below:
@@ -263,3 +260,8 @@ Here are example confusion-matrix and classification-report:
 Here are 3 groups of mislabelled 10-class samples from the test-dataset:
 
 ![alt text](https://github.com/ojhajayant/DataScienceUtils/blob/master/eva/mislabelled_cifar.PNG "Logo Title Text 1")
+
+      
+While the overall code is structered as demanded, but some of initial experimental results can be found 
+ @ the [notebook](https://github.com/ojhajayant/eva/blob/master/week7/S6_assignment_expt_01_with_depthwise_separable_conv2d_02.ipynb) & also  [here](https://github.com/ojhajayant/eva/blob/master/week7/S6_assignment_expt_01_with_depthwise_separable_conv2d_01.ipynb) &  [here](https://github.com/ojhajayant/eva/blob/master/week7/S6_assignment_expt_01.ipynb)
+ 
