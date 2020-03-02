@@ -38,8 +38,8 @@ def main():
     train_cifar10, test_cifar10, train_loader, test_loader = preprocess_data((mean[0], mean[1], mean[2]), (std[0], std[1], std[2]))
     get_data_stats(train_cifar10, test_cifar10, train_loader)
     plot_train_samples(train_loader)
-    L1 = args.L1  # without L1-penalty
-    L2 = args.L2  # without L2-penalty
+    L1 = args.L1   
+    L2 = args.L2   
     device = torch.device("cuda" if args.cuda else "cpu")
     print(device)
     model = Net().to(device)
