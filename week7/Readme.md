@@ -34,7 +34,7 @@ The directory-structure for the code is as  below:
 5. train.py: This has the model-training code.
 6. test.py: This has the model-inference code.
 
-The downloaded datset or any other intermediate plots or config.txt files are save to the ./data (or 
+The downloaded datset or any other intermediate plots or config.txt files are saved to the ./data (or 
 user-provided folder)
 The models are saved to the ./saced_models (or user-provided folder)
 ```
