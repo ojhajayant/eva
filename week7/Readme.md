@@ -1,3 +1,5 @@
+Group Members: Satya Nayak, Ramjee Ganti, Gourav Pattanaik, Jayant Ojha
+
 Please refer [this location](https://github.com/ojhajayant/eva/tree/master/week7/modular) for the code.
 
 Following shows the model, based on the C1-T1-C2-T2-C3-T3-C4-O template, and has a RF = 66x66 (greater than 44x44 as required) with ~58K parameters.
