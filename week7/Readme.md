@@ -36,7 +36,7 @@ The directory-structure for the code is as  below:
 
 The downloaded datset or any other intermediate plots or config.txt files are saved to the ./data (or 
 user-provided folder)
-The models are saved to the ./saced_models (or user-provided folder)
+The models are saved to the ./saved_models (or user-provided folder)
 ```
 An example log from the train command is shown below:
 ```
