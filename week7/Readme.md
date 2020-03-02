@@ -32,7 +32,7 @@ The directory-structure for the code is as  below:
                                  --prefix data
 2. network.py: This is the model-code.
 3. preprocess.py: This code is to download & preprocess data.
-4. utils.py: This has all the utilty code used across.
+4. utils.py: This has all the 'utility' code used across.
 5. train.py: This has the model-training code.
 6. test.py: This has the model-inference code.
 
