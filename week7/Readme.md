@@ -269,7 +269,7 @@ Here are 3 groups of mislabelled 10-class samples from the test-dataset:
 
 ![alt text](https://github.com/ojhajayant/eva/blob/master/week7/mislabelled_cifar.PNG "Logo Title Text 1")
 
-Here are [example train-cmd run-log](https://github.com/ojhajayant/eva/blob/master/week7/an_example_train_cmd_run.log) & [example test-cmd run-log]https://github.com/ojhajayant/eva/blob/master/week7/an_example_test_cmd_run.log)
+Here are [example train-cmd run-log](https://github.com/ojhajayant/eva/blob/master/week7/an_example_train_cmd_run.log) & [example test-cmd run-log.](https://github.com/ojhajayant/eva/blob/master/week7/an_example_test_cmd_run.log)
 
       
 While the overall code is structured as demanded, but some of initial experimental results can be found 
