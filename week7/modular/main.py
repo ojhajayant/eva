@@ -44,7 +44,7 @@ def main():
     L2 = args.L2   
     device = torch.device("cuda" if args.cuda else "cpu")
     print(device)
-    model = Net().to(device)
+    model = network.Net().to(device)
     summary(model, input_size=(3, 32, 32))
     if args.cmd == 'train':
         print("Model training starts on CIFAR10 dataset")
