@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import shutil
-import cfg
+import week7.modular.cfg as cfg
 import torch
 import os
 import json
