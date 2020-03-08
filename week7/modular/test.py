@@ -14,7 +14,8 @@ from week7.modular import utils
 #from utils import save_checkpoint
 
 sys.path.append('./')
-args, unknown = cfg.parser.parse_known_args()
+args = cfg.parser.parse_args(args=[])
+#args, unknown = cfg.parser.parse_known_args()
 #args = cfg.parser.parse_args()
 
 
