@@ -86,7 +86,7 @@ def preprocess_data(mean_tuple, std_tuple):
         transforms.RandomHorizontalFlip(),
         cutout(config['cutout_size'],
                config['cutout_prob'],
-               config['cutout_inside'])
+               config['cutout_inside']),
         transforms.ToTensor(),
         transforms.Normalize(mean_tuple, std_tuple)
         # The mean and std have to be sequences (e.g., tuples), therefore you should add a comma after the values.
