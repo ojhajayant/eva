@@ -3,7 +3,7 @@ from setuptools import setup#,find_packages
 setup(
     #packages=find_packages(),
     name='eva',
-    version='0.0.4',
+    version='0.0.9',
     description='My private package from private EVA repo',
     url='git@github.com:ojhajayant/eva.git',
     author='Jayant Ojha',
