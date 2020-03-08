@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+# #!/usr/bin/env python
 """
 preprocess.py: This contains the data-pre-processing routines.
 """
@@ -107,11 +107,12 @@ def preprocess_data(mean_tuple, std_tuple):
         # transforms.RandomRotation((-10.0, 10.0), fill=(1,)),
         transforms.RandomCrop(32, padding=4),
         transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
         transforms.Normalize(mean_tuple, std_tuple),
-        cutout(args.cutout_size ,
-               args.cutout_prob,
-               args.cutout_inside),
-        to_tensor(),
+#         cutout(args.cutout_size ,
+#                args.cutout_prob,
+#                args.cutout_inside),
+#         to_tensor(),
         # The mean and std have to be sequences (e.g., tuples), therefore you should add a comma after the values.
         # Note the difference between (0.1307) and (0.1307,)
         
