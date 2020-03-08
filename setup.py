@@ -8,6 +8,6 @@ setup(
     author='Jayant Ojha',
     author_email='ojhajayant@yahoo.com',
     license='unlicense',
-    packages=['week7'],
+    packages=['eva', 'week7', 'modular'],
     zip_safe=False
 )
