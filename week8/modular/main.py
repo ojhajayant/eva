@@ -23,12 +23,12 @@ import torch
 import torch.optim as optim
 from torchsummary import summary
 
-from week7.modular import cfg
-from week7.modular import network
-from week7.modular import preprocess
-from week7.modular import test
-from week7.modular import train
-from week7.modular import utils
+from week8.modular import cfg
+from week8.modular import network
+from week8.modular import preprocess
+from week8.modular import test
+from week8.modular import train
+from week8.modular import utils
 
 sys.path.append('./')
 args = cfg.parser.parse_args(args=[])
@@ -47,7 +47,7 @@ def main():
     L2 = args.L2   
     device = torch.device("cuda" if args.cuda else "cpu")
     print(device)
-    model = network.Net().to(device)
+    model = network.ResNet(network.BasicBlock, [2,2,2,2]).to(device)
     summary(model, input_size=(3, 32, 32))
     if args.cmd == 'train':
         print("Model training starts on CIFAR10 dataset")
@@ -69,7 +69,7 @@ def main():
         print("Model inference starts on CIFAR10 dataset")
         model_name = args.best_model
         print("Loaded the best model: {} from last training session".format(model_name))
-        model = utils.load_model(network.Net(), device, model_name=model_name)
+        model = utils.load_model(network.ResNet(network.BasicBlock, [2,2,2,2]), device, model_name=model_name)
         y_test = np.array(test_cifar10.targets)
         print("The confusion-matrix and classification-report for this model are:")
         y_pred = utils.model_pred(model, device, y_test, test_cifar10)
