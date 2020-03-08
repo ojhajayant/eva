@@ -47,7 +47,7 @@ def main():
     L2 = args.L2   
     device = torch.device("cuda" if args.cuda else "cpu")
     print(device)
-    model = network.ResNet(network.BasicBlock, [2,2,2,2]).to(device)
+    model = network.ResNet18().to(device)
     summary(model, input_size=(3, 32, 32))
     if args.cmd == 'train':
         print("Model training starts on CIFAR10 dataset")
@@ -69,7 +69,7 @@ def main():
         print("Model inference starts on CIFAR10 dataset")
         model_name = args.best_model
         print("Loaded the best model: {} from last training session".format(model_name))
-        model = utils.load_model(network.ResNet(network.BasicBlock, [2,2,2,2]), device, model_name=model_name)
+        model = utils.load_model(network.ResNet18(), device, model_name=model_name)
         y_test = np.array(test_cifar10.targets)
         print("The confusion-matrix and classification-report for this model are:")
         y_pred = utils.model_pred(model, device, y_test, test_cifar10)
