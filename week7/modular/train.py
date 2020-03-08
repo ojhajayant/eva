@@ -10,7 +10,8 @@ import sys
 import week7
 from week7 import modular
 from week7.modular import cfg
-from utils import l1_penalty
+from week7.modular import utils
+#from utils import l1_penalty
 
 sys.path.append('./')
 args = cfg.parser.parse_args()
@@ -39,7 +40,7 @@ def train(model, device, train_loader, optimizer, epoch, L1=False):
             to_reg = []
             for param in model.parameters():
                 to_reg.append(param.view(-1))
-            l1 = args.l1_weight * l1_penalty(torch.cat(to_reg))
+            l1 = args.l1_weight * utils.l1_penalty(torch.cat(to_reg))
         else:
             l1 = 0
         # Calculate loss
