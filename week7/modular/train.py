@@ -14,7 +14,8 @@ from week7.modular import utils
 #from utils import l1_penalty
 
 sys.path.append('./')
-args = cfg.parser.parse_args()
+args, unknown = cfg.parser.parse_known_args()
+#args = cfg.parser.parse_args()
 
 
 def train(model, device, train_loader, optimizer, epoch, L1=False):
