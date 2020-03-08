@@ -107,7 +107,7 @@ def preprocess_data(mean_tuple, std_tuple):
         # transforms.RandomRotation((-10.0, 10.0), fill=(1,)),
         transforms.RandomCrop(32, padding=4),
         transforms.RandomHorizontalFlip(),
-        normalize(np.array(mean_tuple), np.array(std_tuple)),
+        transforms.Normalize(mean_tuple, std_tuple),
         cutout(args.cutout_size ,
                args.cutout_prob,
                args.cutout_inside),
