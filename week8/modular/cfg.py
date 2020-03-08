@@ -30,11 +30,6 @@ parser.add_argument('--best_model_path', default='./saved_models/', help='best m
 parser.add_argument('--prefix', '-p', default='data', type=str, help='folder prefix')
 parser.add_argument('--best_model', '-m', default='CIFAR10_model_epoch-39_L1-1_L2-0_val_acc-81.83.h5',
                     type=str, help='name of best-accuracy model saved')
-# cutout https://github.com/hysts/pytorch_cutout/blob/master/main.py
-parser.add_argument('--use_cutout', action='store_true', default=False)
-parser.add_argument('--cutout_size', type=int, default=16)
-parser.add_argument('--cutout_prob', type=float, default=1)
-parser.add_argument('--cutout_inside', action='store_true', default=False)
 
 # Following are the set of global variable being used across.
 current_best_acc = 0
