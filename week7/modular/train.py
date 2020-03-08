@@ -7,7 +7,9 @@ import torch
 import torch.nn.functional as F
 from tqdm import tqdm
 import sys
-import cfg
+import week7
+from week7 import modular
+from week7.modular import cfg
 from utils import l1_penalty
 
 sys.path.append('./')
