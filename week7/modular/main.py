@@ -20,6 +20,7 @@ import os
 import week7
 from week7 import modular
 from week7.modular import cfg
+from week7.modular import utils
 from week7.modular import preprocess
 from week7.modular import network
 from week7.modular import train
