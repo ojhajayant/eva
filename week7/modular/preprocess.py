@@ -3,19 +3,18 @@
 preprocess.py: This contains the data-pre-processing routines.
 """
 from __future__ import print_function
-import numpy as np
-from torchvision import datasets, transforms
-import sys
-import shutil
-import week7
-from week7 import modular
-from week7.modular import cfg
-import torch
-import matplotlib.pyplot as plt
+
 import os
+import sys
+
+import matplotlib.pyplot as plt
+import numpy as np
+import torch
+from torchvision import datasets, transforms
+
+from week7.modular import cfg
 
 sys.path.append('./')
-#args, unknown = cfg.parser.parse_known_args() #parser.parse_args(args=[])
 args = cfg.parser.parse_args(args=[])
 file_path = args.data
 

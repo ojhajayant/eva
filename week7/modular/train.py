@@ -3,20 +3,19 @@
 train.py: This contains the model-training code.
 """
 from __future__ import print_function
+
+import sys
+
 import torch
 import torch.nn.functional as F
 from tqdm import tqdm
-import sys
-import week7
-from week7 import modular
+
 from week7.modular import cfg
 from week7.modular import utils
-#from utils import l1_penalty
+
 
 sys.path.append('./')
 args = cfg.parser.parse_args(args=[])
-#args, unknown = cfg.parser.parse_known_args()
-#args = cfg.parser.parse_args()
 
 
 def train(model, device, train_loader, optimizer, epoch, L1=False):

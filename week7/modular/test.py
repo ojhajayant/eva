@@ -3,20 +3,18 @@
 test.py: This contains the model-inference code.
 """
 from __future__ import print_function
+
 import os
+import sys
+
 import torch
 import torch.nn.functional as F
-import sys
-import week7
-from week7 import modular
+
 from week7.modular import cfg
 from week7.modular import utils
-#from utils import save_checkpoint
 
 sys.path.append('./')
 args = cfg.parser.parse_args(args=[])
-#args, unknown = cfg.parser.parse_known_args()
-#args = cfg.parser.parse_args()
 
 
 def test(model, device, test_loader, optimizer, epoch):

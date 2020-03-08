@@ -5,17 +5,17 @@ It needs to be further abstracted out, to be used with
 more user-args (TBD)
 """
 from __future__ import print_function
+
+import sys
+
 import torch.nn as nn
 import torch.nn.functional as F
-import sys
-import week7
-from week7 import modular
+
 from week7.modular import cfg
 
 sys.path.append('./')
 
 args = cfg.parser.parse_args(args=[])
-#args = cfg.parser.parse_args()
 dropout_value = args.dropout
 
 

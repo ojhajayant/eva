@@ -3,22 +3,21 @@
 utils.py: This contains misc-utility code used across.
 """
 from __future__ import print_function
-import numpy as np
-import matplotlib.pyplot as plt
-import sys
-import shutil
-import week7
-from week7 import modular
-from week7.modular import cfg
-import torch
-import os
+
 import json
+import os
+import shutil
+import sys
+
+import matplotlib.pyplot as plt
+import numpy as np
+import torch
 from sklearn.metrics import confusion_matrix, classification_report
+
+from week7.modular import cfg
 
 sys.path.append('./')
 args = cfg.parser.parse_args(args=[])
-#args, unknown = cfg.parser.parse_known_args()
-#args = cfg.parser.parse_args()
 file_path = args.data
 
 

@@ -12,7 +12,7 @@ sys.path.append('./')
 # The AGG backend(for matplotlib) is for writing to "file", not for rendering in a "window".
 plt.switch_backend('agg')
 parser = argparse.ArgumentParser(description='Training and Validation on CIFAR10 Dataset')
-#parser.add_argument('cmd', default='test', choices=['train', 'test'])
+parser.add_argument('--cmd', default='test', choices=['train', 'test'])
 parser.add_argument('--SEED', '-S', default=1, type=int, help='Random Seed')
 parser.add_argument('--batch_size', '-b', default=64, type=int, help='batch size')
 parser.add_argument('--epochs', '-e', default=40, type=int, help='training epochs')

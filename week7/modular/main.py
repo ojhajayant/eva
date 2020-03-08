@@ -13,25 +13,27 @@ python main.py test  --batch_size 64  --data data --best_model_path saved_models
                      --prefix data
 """
 from __future__ import print_function
+
+import os
+import sys
+import warnings
+
+import numpy as np
 import torch
 import torch.optim as optim
-import sys
-import os
-import week7
-from week7 import modular
-from week7.modular import cfg
-from week7.modular import utils
-from week7.modular import preprocess
-from week7.modular import network
-from week7.modular import train
-from week7.modular import test
 from torchsummary import summary
-import warnings
-import numpy as np
+
+from week7.modular import cfg
+from week7.modular import network
+from week7.modular import preprocess
+from week7.modular import test
+from week7.modular import train
+from week7.modular import utils
 
 sys.path.append('./')
-#args, unknown = cfg.parser.parse_known_args()
 args = cfg.parser.parse_args(args=[])
+if args.cmd == None:
+    args.cmd = 'test'
 
 
 def main():
