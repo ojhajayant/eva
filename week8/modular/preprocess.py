@@ -108,9 +108,9 @@ def preprocess_data(mean_tuple, std_tuple):
         transforms.RandomCrop(32, padding=4),
         transforms.RandomHorizontalFlip(),
         normalize(np.array(mean_tuple), np.array(std_tuple)),
-        cutout(config['cutout_size'],
-               config['cutout_prob'],
-               config['cutout_inside']),
+        cutout(args.cutout_size ,
+               args.cutout_prob,
+               args.cutout_inside),
         to_tensor(),
         # The mean and std have to be sequences (e.g., tuples), therefore you should add a comma after the values.
         # Note the difference between (0.1307) and (0.1307,)
