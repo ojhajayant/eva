@@ -7,6 +7,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import shutil
+import week7
+from week7 import modular
 from week7.modular import cfg
 import torch
 import os
