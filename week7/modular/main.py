@@ -22,8 +22,8 @@ from week7 import modular
 from week7.modular import cfg
 from week7.modular import preprocess
 from torchsummary import summary
-from preprocess import *
-from utils import *
+#from preprocess import *
+#from utils import *
 from network import Net
 from train import train
 from test import test
@@ -37,11 +37,11 @@ args = cfg.parser.parse_args(args=[])
 
 def main():
     print("The config used for this run are being saved @ {}".format(os.path.join(args.prefix, 'config_params.txt')))
-    write(vars(args), os.path.join(args.prefix, 'config_params.txt'))
-    mean, std = get_dataset_mean_std()
-    train_cifar10, test_cifar10, train_loader, test_loader = preprocess_data((mean[0], mean[1], mean[2]), (std[0], std[1], std[2]))
-    get_data_stats(train_cifar10, test_cifar10, train_loader)
-    plot_train_samples(train_loader)
+    utils.write(vars(args), os.path.join(args.prefix, 'config_params.txt'))
+    mean, std = preprocess.get_dataset_mean_std()
+    train_cifar10, test_cifar10, train_loader, test_loader = preprocess.preprocess_data((mean[0], mean[1], mean[2]), (std[0], std[1], std[2]))
+    preprocess.get_data_stats(train_cifar10, test_cifar10, train_loader)
+    utils.plot_train_samples(train_loader)
     L1 = args.L1   
     L2 = args.L2   
     device = torch.device("cuda" if args.cuda else "cpu")
@@ -63,17 +63,17 @@ def main():
             print("EPOCH:", epoch + 1)
             train(model, device, train_loader, optimizer, epoch)
             test(model, device, test_loader, optimizer, epoch)
-        plot_acc_loss()
+        utils.plot_acc_loss()
     elif args.cmd == 'test':
         print("Model inference starts on CIFAR10 dataset")
         model_name = args.best_model
         print("Loaded the best model: {} from last training session".format(model_name))
-        model = load_model(Net(), device, model_name=model_name)
+        model = utils.load_model(Net(), device, model_name=model_name)
         y_test = np.array(test_cifar10.targets)
         print("The confusion-matrix and classification-report for this model are:")
-        y_pred = model_pred(model, device, y_test, test_cifar10)
+        y_pred = utils.model_pred(model, device, y_test, test_cifar10)
         x_test = test_cifar10.data
-        display_mislabelled(model, device, x_test, y_test.reshape(-1, 1), y_pred, test_cifar10,
+        utils.display_mislabelled(model, device, x_test, y_test.reshape(-1, 1), y_pred, test_cifar10,
                             title_str='Predicted Vs Actual With L1')
 
 
