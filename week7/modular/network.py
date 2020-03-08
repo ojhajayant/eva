@@ -8,7 +8,9 @@ from __future__ import print_function
 import torch.nn as nn
 import torch.nn.functional as F
 import sys
-import cfg
+import week7
+from week7 import modular
+from week7.modular import cfg
 
 sys.path.append('./')
 
