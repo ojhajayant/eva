@@ -7,7 +7,9 @@ import numpy as np
 from torchvision import datasets, transforms
 import sys
 import shutil
-import cfg
+import week7
+from week7 import modular
+from week7.modular import cfg
 import torch
 import matplotlib.pyplot as plt
 import os
