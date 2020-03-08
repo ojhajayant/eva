@@ -1,6 +1,6 @@
-import week7.modular.cfg
-import week7.modular.utils
-import week7.modular.main
-import week7.modular.preprocess
-import week7.modular.train
-import week7.modular.test
+import modular.cfg as cfg
+import modular.utils as utils
+import modular.main as main
+import modular.preprocess as preprocess
+import modular.train as train
+import modular.test as test
