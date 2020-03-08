@@ -1,7 +1,7 @@
-from setuptools import setup,find_packages
+from setuptools import setup#,find_packages
 
 setup(
-    packages=find_packages(),
+    #packages=find_packages(),
     name='eva',
     version='0.0.2',
     description='My private package from private EVA repo',
