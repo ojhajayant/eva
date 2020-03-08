@@ -31,7 +31,8 @@ import warnings
 import numpy as np
 
 sys.path.append('./')
-args = cfg.parser.parse_args()
+args, unknown = cfg.parser.parse_known_args()
+#args = cfg.parser.parse_args()
 
 
 def main():
