@@ -41,8 +41,10 @@ def plot_train_samples(train_loader):
         im = features_idx[img_num]
         ax.set_title(train_loader.dataset.classes[i])
         plt.imshow(im)
-        plt.savefig(filepath)
-    #plt.show()
+        if not IPYNB_ENV:
+            plt.savefig(filepath)
+    if IPYNB_ENV:
+        plt.show()
 
 
 def l1_penalty(x):
@@ -112,8 +114,10 @@ def display_mislabelled(model, device, x_test, y_test, y_pred, test_cifar10, tit
             ax.set_title('Act:{} '.format(test_cifar10.classes[int(i)]) + ' Pred:{} '.format(
                 test_cifar10.classes[int(y_pred[intsct[img_num]][0])]), fontsize=24)
             plt.imshow(im)
-            plt.savefig(filepath)
-    # plt.show()
+            if not IPYNB_ENV:
+                plt.savefig(filepath)
+    if IPYNB_ENV:
+        plt.show()
 
 
 def load_model(describe_model_nn, device, model_name):
@@ -180,7 +184,10 @@ def plot_acc_loss():
     axs[0, 1].set_title("Test Loss")
     axs[1, 1].plot(cfg.test_acc)
     axs[1, 1].set_title("Test Accuracy")
-    fig.savefig(filepath)
+    if not IPYNB_ENV:
+        fig.savefig(filepath)
+    else:
+        fig.show()
 
 
 def write(dic, path):
