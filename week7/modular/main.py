@@ -20,9 +20,10 @@ import os
 import week7
 from week7 import modular
 from week7.modular import cfg
+from week7.modular import preprocess
 from torchsummary import summary
-from preprocess import get_dataset_mean_std, preprocess_data, get_data_stats
-from utils import plot_train_samples, plot_acc_loss, load_model, model_pred, display_mislabelled, write
+from preprocess import *
+from utils import *
 from network import Net
 from train import train
 from test import test
