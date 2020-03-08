@@ -7,14 +7,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import shutil
-import week7.modular.cfg as cfg
+import week7.modular.cfg
 import torch
 import os
 import json
 from sklearn.metrics import confusion_matrix, classification_report
 
 sys.path.append('./')
-args = cfg.parser.parse_args()
+args = week7.modular.cfg.parser.parse_args()
 file_path = args.data
 
 
