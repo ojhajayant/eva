@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 """
-network.py: This contains the model definition.
-It needs to be further abstracted out, to be used with
-more user-args (TBD)
+network.py: This contains the ResNet18 model definition.
+as extracted from: 
+https://github.com/kuangliu/pytorch-cifar/blob/master/models/resnet.py
 """
 from __future__ import print_function
 
