@@ -12,7 +12,8 @@ import cfg
 
 sys.path.append('./')
 
-args = cfg.parser.parse_args()
+args = cfg.parser.parse_args(args=[])
+#args = cfg.parser.parse_args()
 dropout_value = args.dropout
 
 
