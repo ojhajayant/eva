@@ -21,12 +21,10 @@ import week7
 from week7 import modular
 from week7.modular import cfg
 from week7.modular import preprocess
+from week7.modular import network
+from week7.modular import train
+from week7.modular import test
 from torchsummary import summary
-#from preprocess import *
-#from utils import *
-from network import Net
-from train import train
-from test import test
 import warnings
 import numpy as np
 
@@ -61,14 +59,14 @@ def main():
         EPOCHS = args.epochs
         for epoch in range(EPOCHS):
             print("EPOCH:", epoch + 1)
-            train(model, device, train_loader, optimizer, epoch)
-            test(model, device, test_loader, optimizer, epoch)
+            train.train(model, device, train_loader, optimizer, epoch)
+            test.test(model, device, test_loader, optimizer, epoch)
         utils.plot_acc_loss()
     elif args.cmd == 'test':
         print("Model inference starts on CIFAR10 dataset")
         model_name = args.best_model
         print("Loaded the best model: {} from last training session".format(model_name))
-        model = utils.load_model(Net(), device, model_name=model_name)
+        model = utils.load_model(network.Net(), device, model_name=model_name)
         y_test = np.array(test_cifar10.targets)
         print("The confusion-matrix and classification-report for this model are:")
         y_pred = utils.model_pred(model, device, y_test, test_cifar10)
