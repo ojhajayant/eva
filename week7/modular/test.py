@@ -7,7 +7,9 @@ import os
 import torch
 import torch.nn.functional as F
 import sys
-import cfg
+import week7
+from week7 import modular
+from week7.modular import cfg
 from utils import save_checkpoint
 
 sys.path.append('./')
