@@ -15,8 +15,8 @@ import matplotlib.pyplot as plt
 import os
 
 sys.path.append('./')
-args, unknown = cfg.parser.parse_known_args()
-#args = cfg.parser.parse_args()
+#args, unknown = cfg.parser.parse_known_args() #parser.parse_args(args=[])
+args = cfg.parser.parse_args(args=[])
 file_path = args.data
 
 
