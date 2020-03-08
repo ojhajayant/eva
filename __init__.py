@@ -1,1 +1,1 @@
-import eva.week7
+import eva.week7 as week7
