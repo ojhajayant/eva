@@ -9,6 +9,6 @@ setup(
     author='Jayant Ojha',
     author_email='ojhajayant@yahoo.com',
     license='unlicense',
-    packages=['week7', 'week7.modular', 'week7.modular.cfg'],
+    packages=['week7', 'week7.modular'],
     zip_safe=False
 )
