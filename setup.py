@@ -8,8 +8,6 @@ setup(
     author='Jayant Ojha',
     author_email='ojhajayant@yahoo.com',
     license='unlicense',
-    #package_dir={'': 'eva'}, 
     packages=find_packages(),
-    #packages=['week7', 'week7.modular'],
     zip_safe=False
 )
