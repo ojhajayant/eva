@@ -10,7 +10,8 @@ import sys
 import week7
 from week7 import modular
 from week7.modular import cfg
-from utils import save_checkpoint
+from week7.modular import utils
+#from utils import save_checkpoint
 
 sys.path.append('./')
 args = cfg.parser.parse_args()
@@ -54,7 +55,7 @@ def test(model, device, test_loader, optimizer, epoch):
         print(
             "validation-accuracy improved from {} to {}, saving model to {}".format(cfg.last_best_acc,
                                                                                     cfg.current_best_acc, filepath))
-        save_checkpoint({
+        utils.save_checkpoint({
             'epoch': epoch + 1,
             'state_dict': model.state_dict(),
             'best_acc1': cfg.current_best_acc,
