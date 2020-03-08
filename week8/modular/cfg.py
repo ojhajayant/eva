@@ -9,8 +9,10 @@ import torch
 import matplotlib.pyplot as plt
 
 sys.path.append('./')
+IPYNB_ENV = True #By default ipynb notebook env
 # The AGG backend(for matplotlib) is for writing to "file", not for rendering in a "window".
-plt.switch_backend('agg')
+if not IPYNB_ENV:
+  plt.switch_backend('agg')
 parser = argparse.ArgumentParser(description='Training and Validation on CIFAR10 Dataset')
 parser.add_argument('--cmd', default='test', choices=['train', 'test'])
 parser.add_argument('--SEED', '-S', default=1, type=int, help='Random Seed')
