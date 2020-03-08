@@ -14,7 +14,7 @@ import numpy as np
 import torch
 from sklearn.metrics import confusion_matrix, classification_report
 
-from week7.modular import cfg
+from week8.modular import cfg
 
 sys.path.append('./')
 args = cfg.parser.parse_args(args=[])
