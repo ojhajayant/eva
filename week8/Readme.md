@@ -1,13 +1,13 @@
 Group Members: Satya Nayak, Ramjee Ganti, Gourav Pattanaik, Jayant Ojha
 
     For the week7 assignment, I had submitted it in a python-script-mode, rather than the required
-    ipynb-notebook format [after the package installation (hosted @ github)], hence I had to make
+    ipynb-notebook format [after the package installation (hosted @ github)], hence had to make
     small modifications in the week7 submission itself, to make it installable (had to add setup.py,
     few empty __init__.py files & some changes in the way & order, in which local imports were made)
     Later on, to accomodate the week8-assignment's requirement, to have the ResNet18-NW incorporated,
-    from the given github repo: https://github.com/kuangliu/pytorch-cifar, I have shifted this 
-    additional stuff under the "week8"-package, with all the reset leveraged from week7. Hence, below,
-    I am making imports from "week8.modular". The submitted notebook file, represents the "main.py",
+    from the given github repo: https://github.com/kuangliu/pytorch-cifar, have shifted this 
+    additional stuff under the "week8"-package, with all the rest, leveraged from week7. Hence, below,
+    am making imports from "week8.modular". The submitted notebook file, represents the "main.py",
     which was the main script to be run in my last submission.
 
 Please refer [this notebook](https://github.com/ojhajayant/eva/blob/master/week8/S8_assignment.ipynb) for the code.
