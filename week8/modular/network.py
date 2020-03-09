@@ -72,6 +72,8 @@ class ResNet(nn.Module):
         out = F.avg_pool2d(out, 4)
         out = out.view(out.size(0), -1)
         out = self.linear(out) 
+        # the torch.nn.CrossEntropyLoss, criterion combines
+        # nn.LogSoftmax() and nn.NLLLoss() in one single class.
         return F.log_softmax(out)
 
 
