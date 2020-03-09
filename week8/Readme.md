@@ -15,6 +15,8 @@ Please refer [this notebook](https://github.com/ojhajayant/eva/blob/master/week8
 The ResNet18 model has been taken from [this link](https://github.com/kuangliu/pytorch-cifar/blob/master/models/resnet.py).
 But as I had been using the nn.NLLLoss() criterion (rather than torch.nn.CrossEntropyLoss) hence additional change of
 returning the nn.LogSoftmax() for the given ResNet18 'out', had to be done, as an only change.
+Only the following img-augmentation methods are used: transforms.RandomCrop(32, padding=4) & transforms.RandomHorizontalFlip()
+Haven't yet started using the main-cutout method for the same.
 ```
     final accuracy of your model = 89.61%
     Here are the training logs:
