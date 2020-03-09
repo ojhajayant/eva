@@ -13,6 +13,8 @@ Group Members: Satya Nayak, Ramjee Ganti, Gourav Pattanaik, Jayant Ojha
 Please refer [this notebook](https://github.com/ojhajayant/eva/blob/master/week8/S8_assignment.ipynb) for the code.
 
 The ResNet18 model has been taken from [this link](https://github.com/kuangliu/pytorch-cifar/blob/master/models/resnet.py).
+But as I had been using the nn.NLLLoss() criterion (rather than torch.nn.CrossEntropyLoss) hence additional change of
+returning the nn.LogSoftmax() for the given ResNet18 'out', had to be done, as an only change.
 ```
     final accuracy of your model = 89.61%
     Here are the training logs:
