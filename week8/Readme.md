@@ -1,6 +1,6 @@
 Group Members: Satya Nayak, Ramjee Ganti, Gourav Pattanaik, Jayant Ojha
 
-    For the week7 assignment, I had submitted in a python-script-mode, rather than the required
+    For the week7 assignment, I had submitted it in a python-script-mode, rather than the required
     ipynb-notebook format [after the package installation (hosted @ github)], hence I had to make
     small modifications in the week7 submission itself, to make it installable (had to add setup.py,
     few empty __init__.py files & some changes in the way & order, in which local imports were made)
