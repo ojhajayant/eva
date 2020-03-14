@@ -19,6 +19,7 @@ from week7.modular import cfg
 sys.path.append('./')
 args = cfg.parser.parse_args(args=[])
 file_path = args.data
+IPYNB_ENV = True #By default ipynb notebook env
 
 
 def plot_train_samples(train_loader):
@@ -31,7 +32,8 @@ def plot_train_samples(train_loader):
     if not os.path.isdir(save_dir):
         os.makedirs(save_dir)
     filepath = os.path.join(save_dir, '{}.png'.format(file_name))
-    print("Saving plot {} class samples to {}".format(num_classes, filepath))
+    if not IPYNB_ENV:
+        print("Saving plot {} class samples to {}".format(num_classes, filepath))
     fig = plt.figure(figsize=(8, 3))
     for i in range(num_classes):
         ax = fig.add_subplot(2, 5, 1 + i, xticks=[], yticks=[])
@@ -41,8 +43,10 @@ def plot_train_samples(train_loader):
         im = features_idx[img_num]
         ax.set_title(train_loader.dataset.classes[i])
         plt.imshow(im)
-        plt.savefig(filepath)
-    #plt.show()
+        if not IPYNB_ENV:
+            plt.savefig(filepath)
+    if IPYNB_ENV:
+        plt.show()
 
 
 def l1_penalty(x):
@@ -97,7 +101,8 @@ def display_mislabelled(model, device, x_test, y_test, y_pred, test_cifar10, tit
     if not os.path.isdir(save_dir):
         os.makedirs(save_dir)
     filepath = os.path.join(save_dir, '{}.png'.format(file_name))
-    print("Saving plot for the mislabelled images to {}".format(filepath))
+    if not IPYNB_ENV:
+        print("Saving plot for the mislabelled images to {}".format(filepath))
     fig = plt.figure(figsize=(55, 10))
     fig.suptitle(title_str, fontsize=24)
     idx1 = np.where(y_test[:] != y_pred)[0]
@@ -112,8 +117,10 @@ def display_mislabelled(model, device, x_test, y_test, y_pred, test_cifar10, tit
             ax.set_title('Act:{} '.format(test_cifar10.classes[int(i)]) + ' Pred:{} '.format(
                 test_cifar10.classes[int(y_pred[intsct[img_num]][0])]), fontsize=24)
             plt.imshow(im)
-            plt.savefig(filepath)
-    # plt.show()
+            if not IPYNB_ENV:
+                plt.savefig(filepath)
+    if IPYNB_ENV:
+        plt.show()
 
 
 def load_model(describe_model_nn, device, model_name):
@@ -180,7 +187,10 @@ def plot_acc_loss():
     axs[0, 1].set_title("Test Loss")
     axs[1, 1].plot(cfg.test_acc)
     axs[1, 1].set_title("Test Accuracy")
-    fig.savefig(filepath)
+    if not IPYNB_ENV:
+        fig.savefig(filepath)
+    else:
+        fig.show()
 
 
 def write(dic, path):
