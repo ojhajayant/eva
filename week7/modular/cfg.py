@@ -9,14 +9,19 @@ import torch
 import matplotlib.pyplot as plt
 
 sys.path.append('./')
+IPYNB_ENV = True #By default ipynb notebook env
 # The AGG backend(for matplotlib) is for writing to "file", not for rendering in a "window".
-plt.switch_backend('agg')
+if not IPYNB_ENV:
+  plt.switch_backend('agg')
 parser = argparse.ArgumentParser(description='Training and Validation on CIFAR10 Dataset')
 parser.add_argument('--cmd', default='test', choices=['train', 'test'])
 parser.add_argument('--SEED', '-S', default=1, type=int, help='Random Seed')
 parser.add_argument('--batch_size', '-b', default=64, type=int, help='batch size')
 parser.add_argument('--epochs', '-e', default=40, type=int, help='training epochs')
-parser.add_argument('--lr', default=0.01, type=float, help='learning rate')
+#Below (lr=0.01) was the default for the custom model architecture used for S7
+#parser.add_argument('--lr', default=0.01, type=float, help='learning rate')
+#Below (lr=0.0006) was the default for the ResNet18 used for S8
+parser.add_argument('--lr', default=0.0006, type=float, help='learning rate')
 parser.add_argument('--cuda', default=torch.cuda.is_available(), type=bool, help='use gpu or not')
 parser.add_argument('--dropout', '-d', default=0.05, type=float, help='dropout percentage for all layers')
 parser.add_argument('--l1_weight', default=0.000025, type=float, help='L1-penalty value')
