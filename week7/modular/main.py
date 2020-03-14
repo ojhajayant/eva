@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 """
 main.py: This is the main script to be run to either train or make inference.
-
 example usage is as below:
 python main.py train --SEED 2 --batch_size 64  --epochs 10 --lr 0.01 \
                      --dropout 0.05 --l1_weight 0.00002  --l2_weight_decay 0.000125 \
                      --L1 True --L2 False --data data --best_model_path saved_models \
                      --prefix data
-
 python main.py test  --batch_size 64  --data data --best_model_path saved_models \
                      --best_model 'CIFAR10_model_epoch-39_L1-1_L2-0_val_acc-81.83.h5' \
                      --prefix data
@@ -47,7 +45,8 @@ def main():
     L2 = args.L2   
     device = torch.device("cuda" if args.cuda else "cpu")
     print(device)
-    model = network.Net().to(device)
+    #model = network.Net().to(device)#Custom Model used in S7
+    model = network.ResNet18().to(device)
     summary(model, input_size=(3, 32, 32))
     if args.cmd == 'train':
         print("Model training starts on CIFAR10 dataset")
@@ -69,7 +68,8 @@ def main():
         print("Model inference starts on CIFAR10 dataset")
         model_name = args.best_model
         print("Loaded the best model: {} from last training session".format(model_name))
-        model = utils.load_model(network.Net(), device, model_name=model_name)
+        #model = utils.load_model(network.Net(), device, model_name=model_name)#Custom Model used in S7
+	      model = utils.load_model(network.ResNet18(), device, model_name=model_name)
         y_test = np.array(test_cifar10.targets)
         print("The confusion-matrix and classification-report for this model are:")
         y_pred = utils.model_pred(model, device, y_test, test_cifar10)
