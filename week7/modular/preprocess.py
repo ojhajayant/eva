@@ -45,10 +45,13 @@ def preprocess_data(mean_tuple, std_tuple):
     # Train Phase transformations
     train_transforms = transforms.Compose([
         #  transforms.Resize((28, 28)),
+	#All transforms are being shifted to albumentations
         #  transforms.ColorJitter(brightness=0.10, contrast=0.1, saturation=0.10, hue=0.1),
         # transforms.RandomRotation((-10.0, 10.0), fill=(1,)),
+        #transforms.RandomCrop(32, padding=4),
+        #transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
-        transforms.Normalize(mean_tuple, std_tuple)
+        transforms.Normalize(mean_tuple, std_tuple),
         # The mean and std have to be sequences (e.g., tuples), therefore you should add a comma after the values.
         # Note the difference between (0.1307) and (0.1307,)
     ])
