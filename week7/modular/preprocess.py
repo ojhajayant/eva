@@ -85,7 +85,7 @@ def preprocess_data(mean_tuple, std_tuple):
         torch.cuda.manual_seed(args.SEED)
 
     # dataloader arguments - something you'll fetch these from cmdprmt
-    dataloader_args = dict(shuffle=True, batch_size=args.batch_size, num_workers=4,
+    dataloader_args = dict(shuffle=True, batch_size=args.batch_size, num_workers=1,
                            pin_memory=True) if args.cuda else dict(shuffle=True,
                                                                    batch_size=args.batch_size)
     # train dataloader
