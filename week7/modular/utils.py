@@ -114,8 +114,11 @@ def display_mislabelled(model, device, x_test, y_test, y_pred, test_dataset, tit
             features_idx = x_test[intsct, ::]
             img_num = np.random.randint(features_idx.shape[0])
             im = features_idx[img_num]
-            ax.set_title('Act:{} '.format(test_dataset.classes[int(i)]) + ' Pred:{} '.format(
-                test_dataset.classes[int(y_pred[intsct[img_num]][0])]), fontsize=24)
+            if args.dataset == 'CIFAR10':
+                ax.set_title('Act:{} '.format(test_dataset.classes[int(i)]) + ' Pred:{} '.format(
+                    test_dataset.classes[int(y_pred[intsct[img_num]][0])]), fontsize=24)
+            elif args.dataset == 'MNIST':
+                ax.set_title('Act:{} '.format(i) + ' Pred:{} '.format(y_pred[intsct[img_num]][0]), fontsize=20)
             plt.imshow(im)
             if not IPYNB_ENV:
                 plt.savefig(filepath)
