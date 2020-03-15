@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-s6_custom_model_mnist.py: This contains the model definition used in session6
+s5_s6_custom_model_mnist.py: This contains the model definition used in session5&6
 to be trained on MNIST dataset.
 """
 from __future__ import print_function
