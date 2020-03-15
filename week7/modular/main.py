@@ -185,6 +185,6 @@ def main_s6_custom_model():
 if __name__ == '__main__':
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-    # main_s8_resnet()
+    main_s8_resnet()
     # main_s7_custom_model()
-    main_s6_custom_model()
+    # main_s6_custom_model()

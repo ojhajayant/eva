@@ -17,11 +17,7 @@ from week7.modular import cfg
 
 sys.path.append('./')
 args = cfg.parser.parse_args(args=[])
-dataset = {
-    'CIFAR10': CIFAR10,
-    'MNIST': MNIST
-}
-#DATASET = "datasets."+ args.dataset
+
 file_path = args.data
 
 
@@ -31,9 +27,9 @@ def get_dataset_mean_std():
     @ transforms.Normalize
     """
     # load the training data
-    if dataset[args.dataset] == CIFAR10:
+    if args.dataset == 'CIFAR10':
         dataset_train = datasets.CIFAR10('./data', train=True, download=True)
-    elif dataset[args.dataset] == MNIST:
+    elif args.dataset == 'MNIST':
         dataset_train = datasets.MNIST('./data', train=True, download=True)
     # use np.concatenate to stick all the images together to form a 1600000 X 32 X 3 array
     x = np.concatenate([np.asarray(dataset_train[i][0]) for i in range(len(dataset_train))])
@@ -72,10 +68,10 @@ def preprocess_data(mean_tuple, std_tuple):
         transforms.ToTensor(),
         transforms.Normalize(mean_tuple, std_tuple)
     ])
-    if dataset[args.dataset] == CIFAR10:
+    if args.dataset == 'CIFAR10':
         train_dataset = datasets.CIFAR10(file_path, train=True, download=True, transform=train_transforms)
         test_dataset = datasets.CIFAR10(file_path, train=False, download=True, transform=test_transforms)
-    elif dataset[args.dataset] == MNIST:
+    elif args.dataset == 'MNIST':
         train_dataset = datasets.MNIST(file_path, train=True, download=True, transform=train_transforms)
         test_dataset = datasets.MNIST(file_path, train=False, download=True, transform=test_transforms)
 
