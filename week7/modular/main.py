@@ -24,7 +24,7 @@ from torchsummary import summary
 from week7.modular import cfg
 from week7.modular.models import resnet18, s5_s6_custom_model_mnist, s7_custom_model_cifar10
 from week7.modular import preprocess
-from week7.modular import preprocess
+from week7.modular import preprocess_albumentations
 from week7.modular import test
 from week7.modular import train
 from week7.modular import utils
@@ -44,7 +44,7 @@ def main_s8_resnet():
     mean, std = preprocess.get_dataset_mean_std()
     if args.use_albumentations:
         train_dataset, test_dataset, train_loader, test_loader = \
-            preprocess.preprocess_data_albumentations((mean[0], mean[1], mean[2]),(std[0], std[1], std[2]))
+            preprocess_albumentations.preprocess_data_albumentations((mean[0], mean[1], mean[2]),(std[0], std[1], std[2]))
     else:
         train_dataset, test_dataset, train_loader, test_loader = \
             preprocess.preprocess_data((mean[0], mean[1], mean[2]), (std[0], std[1], std[2]))
@@ -80,7 +80,7 @@ def main_s8_resnet():
     elif args.cmd == 'test':
         print("Model inference starts on {}  dataset".format(args.dataset))
         #model_name = args.best_model
-        model_name = 'CIFAR10_model_epoch-2_L1-1_L2-0_val_acc-66.92.h5'
+        model_name = 'CIFAR10_model_epoch-8_L1-1_L2-0_val_acc-81.91.h5'
         print("Loaded the best model: {} from last training session".format(model_name))
         # model = utils.load_model(network.Net(), device, model_name=model_name)#Custom Model used in S7
         model = utils.load_model(resnet18.ResNet18(), device, model_name=model_name)
@@ -99,7 +99,7 @@ def main_s7_custom_model():
     mean, std = preprocess.get_dataset_mean_std()
     if args.use_albumentations:
         train_dataset, test_dataset, train_loader, test_loader = \
-            preprocess.preprocess_data_albumentations((mean[0], mean[1], mean[2]),(std[0], std[1], std[2]))
+            preprocess_albumentations.preprocess_data_albumentations((mean[0], mean[1], mean[2]),(std[0], std[1], std[2]))
     else:
         train_dataset, test_dataset, train_loader, test_loader = \
             preprocess.preprocess_data((mean[0], mean[1], mean[2]), (std[0], std[1], std[2]))
@@ -154,8 +154,13 @@ def main_s6_custom_model():
     if not isinstance(mean, tuple):
         train_dataset, test_dataset, train_loader, test_loader = preprocess.preprocess_data((mean,), (std,))
     else:
-        train_dataset, test_dataset, train_loader, test_loader = preprocess.preprocess_data((mean[0], mean[1], mean[2]),
-                                                                  (std[0], std[1], std[2]))
+        if args.use_albumentations:
+            train_dataset, test_dataset, train_loader, test_loader = \
+                preprocess_albumentations.preprocess_data_albumentations((mean[0], mean[1], mean[2]),
+                                                                         (std[0], std[1], std[2]))
+        else:
+            train_dataset, test_dataset, train_loader, test_loader = \
+                preprocess.preprocess_data((mean[0], mean[1], mean[2]), (std[0], std[1], std[2]))
     preprocess.get_data_stats(train_dataset, test_dataset, train_loader)
     utils.plot_train_samples(train_loader)
     L1 = args.L1
@@ -217,5 +222,6 @@ if __name__ == '__main__':
     args.cmd = 'test'
     args.IPYNB_ENV = 'False'
     args.epochs = 10
+    args.use_albumentations = False
     main_s8_resnet()
     # --------END

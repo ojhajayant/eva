@@ -54,12 +54,12 @@ def preprocess_data(mean_tuple, std_tuple):
     # Train Phase transformations
     global args
     train_transforms = transforms.Compose([
-        #  transforms.Resize((28, 28)),
-	#All transforms are being shifted to albumentations
-        #  transforms.ColorJitter(brightness=0.10, contrast=0.1, saturation=0.10, hue=0.1),
-        # transforms.RandomRotation((-10.0, 10.0), fill=(1,)),
-        #transforms.RandomCrop(32, padding=4),
-        #transforms.RandomHorizontalFlip(),
+        #if args.use_albumentations flag is True
+        #We no longer use this preprocessing
+        #At that time, we switch to preprocess_albumentations
+        #module
+        transforms.RandomCrop(32, padding=4),
+        transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         transforms.Normalize(mean_tuple, std_tuple),
         # The mean and std have to be sequences (e.g., tuples), therefore you should add a comma after the values.
@@ -68,8 +68,10 @@ def preprocess_data(mean_tuple, std_tuple):
 
     # Test Phase transformations
     test_transforms = transforms.Compose([
-        #  transforms.Resize((28, 28)),
-        #  transforms.ColorJitter(brightness=0.10, contrast=0.1, saturation=0.10, hue=0.1),
+        # if args.use_albumentations flag is True
+        # We no longer use this preprocessing
+        # At that time, we switch to preprocess_albumentations
+        # module
         transforms.ToTensor(),
         transforms.Normalize(mean_tuple, std_tuple)
     ])
@@ -144,7 +146,7 @@ def get_data_stats(train_dataset, test_dataset, train_loader):
     img_number = np.random.randint(images.shape[0])
     plt.figure().suptitle('{} '.format(train_loader.dataset.classes[labels[img_number]]), fontsize=20)
     if args.dataset == 'CIFAR10':
-        plt.imshow(images.numpy().squeeze()[img_number, ::].transpose((1, 2, 0)), interpolation='nearest')
+        plt.imshow(images.numpy().squeeze()[img_number, ::].transpose((1, 2, 0)))#, interpolation='nearest')
     elif args.dataset == 'MNIST':
         # plt.imshow(images[0].numpy().squeeze(), cmap='gray_r')
         plt.imshow(images.numpy().squeeze()[img_number, ::], cmap='gray_r')

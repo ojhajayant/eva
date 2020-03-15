@@ -16,6 +16,7 @@ from torchvision import datasets
 from torchvision.datasets import CIFAR10, MNIST
 from albumentations import Compose, RandomCrop, Normalize, HorizontalFlip
 from albumentations.pytorch.transforms import ToTensorV2
+from albumentations.augmentations.transforms import ToFloat,CoarseDropout, ElasticTransform
 
 from week7.modular import cfg
 
@@ -33,11 +34,21 @@ file_path = args.data
 def preprocess_data_albumentations(mean_tuple, std_tuple):
     """
     Used for pre-processing the data
+    when for args.use_albumentations True
     """
     # Train Phase transformations
     global args
     train_transforms = Compose([
+        ToFloat(),
         RandomCrop(height=32, width=32, always_apply=True),
+        CoarseDropout(max_holes=8,
+                      max_height=16,
+                      max_width=16,
+                      min_holes=0,
+                      min_height=0,
+                      min_width=0,
+                      fill_value=mean_tuple, always_apply=True),
+        ElasticTransform(),
         HorizontalFlip(p=0.5),
         ToTensorV2(),
         Normalize(mean=mean_tuple, std=std_tuple),
@@ -45,6 +56,7 @@ def preprocess_data_albumentations(mean_tuple, std_tuple):
 
     # Test Phase transformations
     test_transforms = Compose([
+        ToFloat(),
         ToTensorV2(),
         Normalize(mean=mean_tuple, std=std_tuple),
     ])
@@ -64,7 +76,7 @@ def preprocess_data_albumentations(mean_tuple, std_tuple):
         torch.cuda.manual_seed(args.SEED)
 
     # dataloader arguments - something you'll fetch these from cmdprmt
-    dataloader_args = dict(shuffle=True, batch_size=args.batch_size, num_workers=1,
+    dataloader_args = dict(shuffle=True, batch_size=args.batch_size, num_workers=4,
                            pin_memory=True) if args.cuda else dict(shuffle=True,
                                                                    batch_size=args.batch_size)
     # train dataloader
