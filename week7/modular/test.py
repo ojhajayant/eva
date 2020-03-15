@@ -47,8 +47,13 @@ def test(model, device, test_loader, optimizer, epoch):
     # Prepare model model saving directory.
     if is_best:
         save_dir = os.path.join(os.getcwd(), args.best_model_path)
-        model_name = 'CIFAR10_model_epoch-{}_L1-{}_L2-{}_val_acc-{}.h5'.format(epoch + 1, int(args.L1), int(args.L2),
-                                                                               acc1)
+        if args.dataset == 'CIFAR10':
+            model_name = 'CIFAR10_model_epoch-{}_L1-{}_L2-{}_val_acc-{}.h5'.format(epoch + 1, int(args.L1),
+                                                                                   int(args.L2), acc1)
+        elif args.dataset == 'MNIST':
+            model_name = 'MNIST_model_epoch-{}_L1-{}_L2-{}_val_acc-{}.h5'.format(epoch + 1, int(args.L1),
+                                                                                   int(args.L2), acc1)
+
         if not os.path.isdir(save_dir):
             os.makedirs(save_dir)
         filepath = os.path.join(save_dir, model_name)

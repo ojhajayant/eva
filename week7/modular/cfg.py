@@ -16,8 +16,9 @@ if not IPYNB_ENV:
 parser = argparse.ArgumentParser(description='Training and Validation on CIFAR10 Dataset')
 parser.add_argument('--cmd', default='test', choices=['train', 'test'])
 parser.add_argument('--SEED', '-S', default=1, type=int, help='Random Seed')
+parser.add_argument('--dataset', '-D', default='MNIST', type=str, help='Dataset--CIFAR10, MNIST, or...')
 parser.add_argument('--batch_size', '-b', default=64, type=int, help='batch size')
-parser.add_argument('--epochs', '-e', default=40, type=int, help='training epochs')
+parser.add_argument('--epochs', '-e', default=10, type=int, help='training epochs')
 #Below (lr=0.01) was the default for the custom model architecture used for S7
 #parser.add_argument('--lr', default=0.01, type=float, help='learning rate')
 #Below (lr=0.0006) was the default for the ResNet18 used for S8
@@ -31,7 +32,7 @@ parser.add_argument('--L2', default=False, type=bool, help='L2-penalty/weight_de
 parser.add_argument('--data', '-s', default='./data/', help='path to save train/test data')
 parser.add_argument('--best_model_path', default='./saved_models/', help='best model saved path')
 parser.add_argument('--prefix', '-p', default='data', type=str, help='folder prefix')
-parser.add_argument('--best_model', '-m', default='CIFAR10_model_epoch-39_L1-1_L2-0_val_acc-81.83.h5',
+parser.add_argument('--best_model', '-m', default='CIFAR10_model_epoch-39_L1-1_L2-0_val_acc-89.61.h5',
                     type=str, help='name of best-accuracy model saved')
 
 # Following are the set of global variable being used across.

@@ -19,7 +19,7 @@ from week7.modular import cfg
 sys.path.append('./')
 args = cfg.parser.parse_args(args=[])
 file_path = args.data
-IPYNB_ENV = True #By default ipynb notebook env
+IPYNB_ENV = True  # By default ipynb notebook env
 
 
 def plot_train_samples(train_loader):
@@ -67,7 +67,7 @@ def save_checkpoint(state, is_best, filename='checkpoint.pth.tar'):
         shutil.copyfile(filename, 'model_best.pth.tar')
 
 
-def model_pred(model, device, y_test, test_cifar10, batchsize=100):
+def model_pred(model, device, y_test, test_dataset, batchsize=100):
     """
     Make inference on the test-data &
     print classification-report
@@ -77,7 +77,7 @@ def model_pred(model, device, y_test, test_cifar10, batchsize=100):
     model.eval()
     dataldr_args = dict(shuffle=False, batch_size=batchsize, num_workers=4, pin_memory=True) if args.cuda else dict(
         shuffle=False, batch_size=batchsize)
-    test_ldr = torch.utils.data.DataLoader(test_cifar10, **dataldr_args)
+    test_ldr = torch.utils.data.DataLoader(test_dataset, **dataldr_args)
     y_pred = np.zeros((y_test.shape[0], 1))
     with torch.no_grad():
         for data, target in test_ldr:
@@ -88,11 +88,11 @@ def model_pred(model, device, y_test, test_cifar10, batchsize=100):
             start += batchsize
             stop += batchsize
     print(confusion_matrix(y_test, y_pred))
-    print(classification_report(y_test, y_pred, target_names=test_cifar10.classes))
+    print(classification_report(y_test, y_pred, target_names=test_dataset.classes))
     return y_pred
 
 
-def display_mislabelled(model, device, x_test, y_test, y_pred, test_cifar10, title_str):
+def display_mislabelled(model, device, x_test, y_test, y_pred, test_dataset, title_str):
     """
     Plot 3 groups of 10 mislabelled data class-samples.
     """
@@ -107,15 +107,15 @@ def display_mislabelled(model, device, x_test, y_test, y_pred, test_cifar10, tit
     fig.suptitle(title_str, fontsize=24)
     idx1 = np.where(y_test[:] != y_pred)[0]
     for j in range(3):
-        for i in range(len(test_cifar10.classes)):
+        for i in range(len(test_dataset.classes)):
             ax = fig.add_subplot(3, 10, j * 10 + i + 1, xticks=[], yticks=[])
             idx = np.where(y_test[:] == i)[0]
             intsct = np.intersect1d(idx1, idx)
             features_idx = x_test[intsct, ::]
             img_num = np.random.randint(features_idx.shape[0])
             im = features_idx[img_num]
-            ax.set_title('Act:{} '.format(test_cifar10.classes[int(i)]) + ' Pred:{} '.format(
-                test_cifar10.classes[int(y_pred[intsct[img_num]][0])]), fontsize=24)
+            ax.set_title('Act:{} '.format(test_dataset.classes[int(i)]) + ' Pred:{} '.format(
+                test_dataset.classes[int(y_pred[intsct[img_num]][0])]), fontsize=24)
             plt.imshow(im)
             if not IPYNB_ENV:
                 plt.savefig(filepath)

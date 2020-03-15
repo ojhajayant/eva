@@ -11,23 +11,32 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 from torchvision import datasets, transforms
+from torchvision.datasets import CIFAR10, MNIST
 
 from week7.modular import cfg
 
 sys.path.append('./')
 args = cfg.parser.parse_args(args=[])
+dataset = {
+    'CIFAR10': CIFAR10,
+    'MNIST': MNIST
+}
+#DATASET = "datasets."+ args.dataset
 file_path = args.data
 
 
 def get_dataset_mean_std():
     """
-    Get the CIFAR10 dataset mean and std to be used as tuples
+    Get the CIFAR10/MNIST/etc dataset mean and std to be used as tuples
     @ transforms.Normalize
     """
     # load the training data
-    cifar10_train = datasets.CIFAR10('./data', train=True, download=True)
+    if dataset[args.dataset] == CIFAR10:
+        dataset_train = datasets.CIFAR10('./data', train=True, download=True)
+    elif dataset[args.dataset] == MNIST:
+        dataset_train = datasets.MNIST('./data', train=True, download=True)
     # use np.concatenate to stick all the images together to form a 1600000 X 32 X 3 array
-    x = np.concatenate([np.asarray(cifar10_train[i][0]) for i in range(len(cifar10_train))])
+    x = np.concatenate([np.asarray(dataset_train[i][0]) for i in range(len(dataset_train))])
     # print(x)
     print(x.shape)
     # calculate the mean and std
@@ -63,8 +72,13 @@ def preprocess_data(mean_tuple, std_tuple):
         transforms.ToTensor(),
         transforms.Normalize(mean_tuple, std_tuple)
     ])
-    train_cifar10 = datasets.CIFAR10(file_path, train=True, download=True, transform=train_transforms)
-    test_cifar10 = datasets.CIFAR10(file_path, train=False, download=True, transform=test_transforms)
+    if dataset[args.dataset] == CIFAR10:
+        train_dataset = datasets.CIFAR10(file_path, train=True, download=True, transform=train_transforms)
+        test_dataset = datasets.CIFAR10(file_path, train=False, download=True, transform=test_transforms)
+    elif dataset[args.dataset] == MNIST:
+        train_dataset = datasets.MNIST(file_path, train=True, download=True, transform=train_transforms)
+        test_dataset = datasets.MNIST(file_path, train=False, download=True, transform=test_transforms)
+
     print("CUDA Available?", args.cuda)
 
     # For reproducibility
@@ -78,30 +92,43 @@ def preprocess_data(mean_tuple, std_tuple):
                            pin_memory=True) if args.cuda else dict(shuffle=True,
                                                                    batch_size=args.batch_size)
     # train dataloader
-    train_loader = torch.utils.data.DataLoader(train_cifar10, **dataloader_args)
+    train_loader = torch.utils.data.DataLoader(train_dataset, **dataloader_args)
     # test dataloader
-    test_loader = torch.utils.data.DataLoader(test_cifar10, **dataloader_args)
-    return train_cifar10, test_cifar10, train_loader, test_loader
+    test_loader = torch.utils.data.DataLoader(test_dataset, **dataloader_args)
+    return train_dataset, test_dataset, train_loader, test_loader
 
 
-def get_data_stats(train_cifar10, test_cifar10, train_loader):
+def get_data_stats(train_dataset, test_dataset, train_loader):
     """
     Get the data-statistics
     """
     # We'd need to convert it into Numpy! Remember above we have converted it into tensors already
-    train_data = torch.from_numpy(train_cifar10.data)
-    print('[Stats from Train Data]')
-    print(' - Numpy Shape:', torch.from_numpy(train_cifar10.data).cpu().numpy().shape)
-    print(' - Tensor Shape:', torch.from_numpy(train_cifar10.data).size())
-    print(' - min:', torch.min(torch.from_numpy(train_cifar10.data)))
-    print(' - max:', torch.max(torch.from_numpy(train_cifar10.data)))
-    test_data = torch.from_numpy(test_cifar10.data)
-    print('[Stats from Test Data]')
-    print(' - Numpy Shape:', torch.from_numpy(test_cifar10.data).cpu().numpy().shape)
-    print(' - Tensor Shape:', torch.from_numpy(test_cifar10.data).size())
-    print(' - min:', torch.min(torch.from_numpy(test_cifar10.data)))
-    print(' - max:', torch.max(torch.from_numpy(test_cifar10.data)))
+    # train_data = torch.from_numpy(train_dataset.data)
 
+    if args.dataset == 'CIFAR10':
+        print('[Stats from Train Data]')
+        print(' - Numpy Shape:', torch.from_numpy(train_dataset.data).cpu().numpy().shape)
+        print(' - Tensor Shape:', torch.from_numpy(train_dataset.data).size())
+        print(' - min:', torch.min(torch.from_numpy(train_dataset.data)))
+        print(' - max:', torch.max(torch.from_numpy(train_dataset.data)))
+        test_data = torch.from_numpy(test_dataset.data)
+        print('[Stats from Test Data]')
+        print(' - Numpy Shape:', torch.from_numpy(test_dataset.data).cpu().numpy().shape)
+        print(' - Tensor Shape:', torch.from_numpy(test_dataset.data).size())
+        print(' - min:', torch.min(torch.from_numpy(test_dataset.data)))
+        print(' - max:', torch.max(torch.from_numpy(test_dataset.data)))
+    elif args.dataset == 'MNIST':
+        print('[Stats from Train Data]')
+        print(' - Numpy Shape:', train_dataset.data.cpu().numpy().shape)
+        print(' - Tensor Shape:', train_dataset.data.size())
+        print(' - min:', torch.min(train_dataset.data))
+        print(' - max:', torch.max(train_dataset.data))
+        test_data = test_dataset.data
+        print('[Stats from Test Data]')
+        print(' - Numpy Shape:', test_dataset.data.cpu().numpy().shape)
+        print(' - Tensor Shape:', test_dataset.data.size())
+        print(' - min:', torch.min(test_dataset.data))
+        print(' - max:', torch.max(test_dataset.data))
     dataiter = iter(train_loader)
     images, labels = dataiter.next()
 
@@ -115,6 +142,9 @@ def get_data_stats(train_cifar10, test_cifar10, train_loader):
     print("Saving plot for a sample to ascertain RF required for edges & gradient {}".format(filepath))
     img_number = np.random.randint(images.shape[0])
     plt.figure().suptitle('{} '.format(train_loader.dataset.classes[labels[img_number]]), fontsize=20)
-    plt.imshow(images.numpy().squeeze()[img_number, ::].transpose((1, 2, 0)), interpolation='nearest')
+    if args.dataset == 'CIFAR10':
+        plt.imshow(images.numpy().squeeze()[img_number, ::].transpose((1, 2, 0)), interpolation='nearest')
+    elif args.dataset == 'MNIST':
+        plt.imshow(images[0].numpy().squeeze(), cmap='gray_r')
     plt.savefig(filepath)
     # plt.show()
