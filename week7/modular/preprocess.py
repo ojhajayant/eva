@@ -16,18 +16,21 @@ from torchvision.datasets import CIFAR10, MNIST
 from week7.modular import cfg
 
 sys.path.append('./')
-args = cfg.parser.parse_args(args=[])
+# args = cfg.parser.parse_args(args=[])
+global args
+args = cfg.args
 
 file_path = args.data
-IPYNB_ENV = True  # By default ipynb notebook env
+# IPYNB_ENV = True  # By default ipynb notebook env
 
 
-def get_dataset_mean_std(args):
+def get_dataset_mean_std():
     """
     Get the CIFAR10/MNIST/etc dataset mean and std to be used as tuples
     @ transforms.Normalize
     """
     # load the training data
+    global args
     if args.dataset == 'CIFAR10':
         dataset_train = datasets.CIFAR10('./data', train=True, download=True)
     elif args.dataset == 'MNIST':
@@ -35,7 +38,7 @@ def get_dataset_mean_std(args):
     # use np.concatenate to stick all the images together to form a 1600000 X 32 X 3 array
     x = np.concatenate([np.asarray(dataset_train[i][0]) for i in range(len(dataset_train))])
     # print(x)
-    print(x.shape)
+    # print(x.shape)
     # calculate the mean and std
     train_mean = np.mean(x, axis=(0, 1)) / 255
     train_std = np.std(x, axis=(0, 1)) / 255
@@ -49,6 +52,7 @@ def preprocess_data(mean_tuple, std_tuple):
     Used for pre-processing the data
     """
     # Train Phase transformations
+    global args
     train_transforms = transforms.Compose([
         #  transforms.Resize((28, 28)),
 	#All transforms are being shifted to albumentations
@@ -95,13 +99,13 @@ def preprocess_data(mean_tuple, std_tuple):
     return train_dataset, test_dataset, train_loader, test_loader
 
 
-def get_data_stats(train_dataset, test_dataset, train_loader, args):
+def get_data_stats(train_dataset, test_dataset, train_loader):
     """
     Get the data-statistics
     """
     # We'd need to convert it into Numpy! Remember above we have converted it into tensors already
     # train_data = torch.from_numpy(train_dataset.data)
-
+    global args
     if args.dataset == 'CIFAR10':
         print('[Stats from Train Data]')
         print(' - Numpy Shape:', torch.from_numpy(train_dataset.data).cpu().numpy().shape)
@@ -142,8 +146,9 @@ def get_data_stats(train_dataset, test_dataset, train_loader, args):
     if args.dataset == 'CIFAR10':
         plt.imshow(images.numpy().squeeze()[img_number, ::].transpose((1, 2, 0)), interpolation='nearest')
     elif args.dataset == 'MNIST':
-        plt.imshow(images[0].numpy().squeeze(), cmap='gray_r')
-    if not IPYNB_ENV:
+        # plt.imshow(images[0].numpy().squeeze(), cmap='gray_r')
+        plt.imshow(images.numpy().squeeze()[img_number, ::], cmap='gray_r')
+    if not args.IPYNB_ENV:
         plt.savefig(filepath)
-    if IPYNB_ENV:
+    if args.IPYNB_ENV:
         plt.show()

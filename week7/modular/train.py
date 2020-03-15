@@ -15,13 +15,15 @@ from week7.modular import utils
 
 
 sys.path.append('./')
-args = cfg.parser.parse_args(args=[])
-
+# args = cfg.parser.parse_args(args=[])
+global args
+args = cfg.args
 
 def train(model, device, train_loader, optimizer, epoch, L1=False):
     """
     main training code
     """
+    global args
     model.train()
     pbar = tqdm(train_loader, position=0, leave=True)
     correct = 0

@@ -17,22 +17,25 @@ from sklearn.metrics import confusion_matrix, classification_report
 from week7.modular import cfg
 
 sys.path.append('./')
-args = cfg.parser.parse_args(args=[])
+# args = cfg.parser.parse_args(args=[])
+global args
+args = cfg.args
 file_path = args.data
-IPYNB_ENV = True  # By default ipynb notebook env
+# IPYNB_ENV = True  # By default ipynb notebook env
 
 
 def plot_train_samples(train_loader):
     """
     Plot dataset class samples
     """
+    global args
     num_classes = len(np.unique(train_loader.dataset.targets))
     save_dir = os.path.join(os.getcwd(), args.data)
     file_name = 'plot_class_samples'
     if not os.path.isdir(save_dir):
         os.makedirs(save_dir)
     filepath = os.path.join(save_dir, '{}.png'.format(file_name))
-    if not IPYNB_ENV:
+    if not args.IPYNB_ENV:
         print("Saving plot {} class samples to {}".format(num_classes, filepath))
     fig = plt.figure(figsize=(8, 3))
     for i in range(num_classes):
@@ -43,9 +46,9 @@ def plot_train_samples(train_loader):
         im = features_idx[img_num]
         ax.set_title(train_loader.dataset.classes[i])
         plt.imshow(im)
-        if not IPYNB_ENV:
+        if not args.IPYNB_ENV:
             plt.savefig(filepath)
-    if IPYNB_ENV:
+    if args.IPYNB_ENV:
         plt.show()
 
 
@@ -54,6 +57,7 @@ def l1_penalty(x):
     L1 regularization adds an L1 penalty equal
     to the absolute value of the magnitude of coefficients
     """
+    global args
 
     return torch.abs(x).sum()
 
@@ -62,6 +66,7 @@ def save_checkpoint(state, is_best, filename='checkpoint.pth.tar'):
     """
     Save the model to the path
     """
+    global args
     torch.save(state, filename)
     if is_best:
         shutil.copyfile(filename, 'model_best.pth.tar')
@@ -72,6 +77,7 @@ def model_pred(model, device, y_test, test_dataset, batchsize=100):
     Make inference on the test-data &
     print classification-report
     """
+    global args
     start = 0
     stop = batchsize
     model.eval()
@@ -96,12 +102,13 @@ def display_mislabelled(model, device, x_test, y_test, y_pred, test_dataset, tit
     """
     Plot 3 groups of 10 mislabelled data class-samples.
     """
+    global args
     save_dir = os.path.join(os.getcwd(), args.data)
     file_name = 'plot_mislabelled'
     if not os.path.isdir(save_dir):
         os.makedirs(save_dir)
     filepath = os.path.join(save_dir, '{}.png'.format(file_name))
-    if not IPYNB_ENV:
+    if not args.IPYNB_ENV:
         print("Saving plot for the mislabelled images to {}".format(filepath))
     fig = plt.figure(figsize=(55, 10))
     fig.suptitle(title_str, fontsize=24)
@@ -118,11 +125,11 @@ def display_mislabelled(model, device, x_test, y_test, y_pred, test_dataset, tit
                 ax.set_title('Act:{} '.format(test_dataset.classes[int(i)]) + ' Pred:{} '.format(
                     test_dataset.classes[int(y_pred[intsct[img_num]][0])]), fontsize=24)
             elif args.dataset == 'MNIST':
-                ax.set_title('Act:{} '.format(i) + ' Pred:{} '.format(y_pred[intsct[img_num]][0]), fontsize=20)
+                ax.set_title('Act:{} '.format(i) + ' Pred:{} '.format(int(y_pred[intsct[img_num]][0])), fontsize=20)
             plt.imshow(im)
-            if not IPYNB_ENV:
+            if not args.IPYNB_ENV:
                 plt.savefig(filepath)
-    if IPYNB_ENV:
+    if args.IPYNB_ENV:
         plt.show()
 
 
@@ -130,6 +137,7 @@ def load_model(describe_model_nn, device, model_name):
     """
     load the best-accuracy model from the given name
     """
+    global args
     save_dir = os.path.join(os.getcwd(), args.best_model_path)
     if not os.path.isdir(save_dir):
         os.makedirs(save_dir)
@@ -145,6 +153,7 @@ def save_acc_loss(test_losses, test_acc, test_loss_file_name, test_acc_file_name
     """
     Save test-accuracies and test-losses during training.
     """
+    global args
     import os
     import numpy as np
     # Prepare model model saving directory.
@@ -161,6 +170,7 @@ def load_acc_loss(test_loss_file_name, test_acc_file_name):
     """
     Load the accuracy and loss data from files.
     """
+    global args
     # Prepare model model saving directory.
     save_dir = os.path.join(os.getcwd(), file_path)
     if not os.path.isdir(save_dir):
@@ -176,6 +186,7 @@ def plot_acc_loss():
     """
     Plot both accuracy and loss plots.
     """
+    global args
     save_dir = os.path.join(os.getcwd(), args.data)
     file_name = 'plot_acc_loss'
     if not os.path.isdir(save_dir):
@@ -190,13 +201,14 @@ def plot_acc_loss():
     axs[0, 1].set_title("Test Loss")
     axs[1, 1].plot(cfg.test_acc)
     axs[1, 1].set_title("Test Accuracy")
-    if not IPYNB_ENV:
+    if not args.IPYNB_ENV:
         fig.savefig(filepath)
     else:
         fig.show()
 
 
 def write(dic, path):
+    global args
     with open(path, 'w+') as f:
         # write params to txt file
         f.write(json.dumps(dic))

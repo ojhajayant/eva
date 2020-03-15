@@ -14,11 +14,12 @@ IPYNB_ENV = True #By default ipynb notebook env
 if not IPYNB_ENV:
   plt.switch_backend('agg')
 parser = argparse.ArgumentParser(description='Training and Validation on CIFAR10 Dataset')
-parser.add_argument('--cmd', default='train', choices=['train', 'test'])
+parser.add_argument('--cmd', default='test', choices=['train', 'test'])
+parser.add_argument('--IPYNB_ENV', default=True, type=bool, help='Is this ipynb environment?')
 parser.add_argument('--SEED', '-S', default=1, type=int, help='Random Seed')
-parser.add_argument('--dataset', '-D', default='CIFAR10', type=str, help='Dataset--CIFAR10, MNIST, or...')
+parser.add_argument('--dataset', '-D', default='MNIST', type=str, help='Dataset--CIFAR10, MNIST, or...')
 parser.add_argument('--batch_size', '-b', default=64, type=int, help='batch size')
-parser.add_argument('--epochs', '-e', default=2, type=int, help='training epochs')
+parser.add_argument('--epochs', '-e', default=8, type=int, help='training epochs')
 #Below (lr=0.01) was the default for the custom model architecture used for S7
 #parser.add_argument('--lr', default=0.01, type=float, help='learning rate')
 #Below (lr=0.0006) was the default for the ResNet18 used for S8
@@ -42,3 +43,4 @@ train_losses = []
 test_losses = []
 train_acc = []
 test_acc = []
+args = parser.parse_args(args=[])

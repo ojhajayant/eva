@@ -14,7 +14,9 @@ from week7.modular import cfg
 from week7.modular import utils
 
 sys.path.append('./')
-args = cfg.parser.parse_args(args=[])
+# args = cfg.parser.parse_args(args=[])
+global args
+args = cfg.args
 
 
 def test(model, device, test_loader, optimizer, epoch):
@@ -22,6 +24,7 @@ def test(model, device, test_loader, optimizer, epoch):
     main test code
     """
     # global current_best_acc, last_best_acc
+    global args
     model.eval()
     test_loss = 0
     correct = 0
