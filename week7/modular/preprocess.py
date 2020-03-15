@@ -19,6 +19,7 @@ sys.path.append('./')
 args = cfg.parser.parse_args(args=[])
 
 file_path = args.data
+IPYNB_ENV = True  # By default ipynb notebook env
 
 
 def get_dataset_mean_std():
@@ -142,5 +143,7 @@ def get_data_stats(train_dataset, test_dataset, train_loader):
         plt.imshow(images.numpy().squeeze()[img_number, ::].transpose((1, 2, 0)), interpolation='nearest')
     elif args.dataset == 'MNIST':
         plt.imshow(images[0].numpy().squeeze(), cmap='gray_r')
-    plt.savefig(filepath)
-    # plt.show()
+    if not IPYNB_ENV:
+        plt.savefig(filepath)
+    if IPYNB_ENV:
+        plt.show()
