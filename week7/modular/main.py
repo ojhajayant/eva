@@ -71,7 +71,7 @@ def main_s8_resnet():
     elif args.cmd == 'test':
         print("Model inference starts on {}  dataset".format(args.dataset))
         #model_name = args.best_model
-        model_name = 'CIFAR10_model_epoch-4_L1-1_L2-0_val_acc-71.74.h5'
+        model_name = 'CIFAR10_model_epoch-2_L1-1_L2-0_val_acc-66.92.h5'
         print("Loaded the best model: {} from last training session".format(model_name))
         # model = utils.load_model(network.Net(), device, model_name=model_name)#Custom Model used in S7
         model = utils.load_model(resnet18.ResNet18(), device, model_name=model_name)
@@ -131,16 +131,17 @@ def main_s7_custom_model():
                                   title_str='Predicted Vs Actual With L1')
 
 
-def main_s6_custom_model():
+def main_s6_custom_model(args):
     print("The config used for this run are being saved @ {}".format(os.path.join(args.prefix, 'config_params.txt')))
     utils.write(vars(args), os.path.join(args.prefix, 'config_params.txt'))
-    mean, std = preprocess.get_dataset_mean_std()
+
+    mean, std = preprocess.get_dataset_mean_std(args=args)
     if not isinstance(mean, tuple):
         train_dataset, test_dataset, train_loader, test_loader = preprocess.preprocess_data((mean,), (std,))
     else:
         train_dataset, test_dataset, train_loader, test_loader = preprocess.preprocess_data((mean[0], mean[1], mean[2]),
                                                                   (std[0], std[1], std[2]))
-    preprocess.get_data_stats(train_dataset, test_dataset, train_loader)
+    preprocess.get_data_stats(train_dataset, test_dataset, train_loader, args=args)
     utils.plot_train_samples(train_loader)
     L1 = args.L1
     L2 = args.L2
@@ -185,6 +186,7 @@ def main_s6_custom_model():
 if __name__ == '__main__':
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-    main_s8_resnet()
+    # main_s8_resnet()
     # main_s7_custom_model()
-    # main_s6_custom_model()
+    args.dataset = 'MNIST'
+    main_s6_custom_model(args=args)

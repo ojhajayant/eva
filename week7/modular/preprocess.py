@@ -22,7 +22,7 @@ file_path = args.data
 IPYNB_ENV = True  # By default ipynb notebook env
 
 
-def get_dataset_mean_std():
+def get_dataset_mean_std(args):
     """
     Get the CIFAR10/MNIST/etc dataset mean and std to be used as tuples
     @ transforms.Normalize
@@ -95,7 +95,7 @@ def preprocess_data(mean_tuple, std_tuple):
     return train_dataset, test_dataset, train_loader, test_loader
 
 
-def get_data_stats(train_dataset, test_dataset, train_loader):
+def get_data_stats(train_dataset, test_dataset, train_loader, args):
     """
     Get the data-statistics
     """
