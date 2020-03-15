@@ -16,6 +16,7 @@ if not IPYNB_ENV:
 parser = argparse.ArgumentParser(description='Training and Validation on CIFAR10 Dataset')
 parser.add_argument('--cmd', default='test', choices=['train', 'test'])
 parser.add_argument('--IPYNB_ENV', default=True, type=bool, help='Is this ipynb environment?')
+parser.add_argument('--use_albumentations', default=True, type=bool, help='Use Albumentations based img-aug methods?')
 parser.add_argument('--SEED', '-S', default=1, type=int, help='Random Seed')
 parser.add_argument('--dataset', '-D', default='MNIST', type=str, help='Dataset--CIFAR10, MNIST, or...')
 parser.add_argument('--batch_size', '-b', default=64, type=int, help='batch size')

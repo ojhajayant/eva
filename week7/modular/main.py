@@ -24,6 +24,7 @@ from torchsummary import summary
 from week7.modular import cfg
 from week7.modular.models import resnet18, s5_s6_custom_model_mnist, s7_custom_model_cifar10
 from week7.modular import preprocess
+from week7.modular import preprocess
 from week7.modular import test
 from week7.modular import train
 from week7.modular import utils
@@ -41,8 +42,13 @@ def main_s8_resnet():
     print("The config used for this run are being saved @ {}".format(os.path.join(args.prefix, 'config_params.txt')))
     utils.write(vars(args), os.path.join(args.prefix, 'config_params.txt'))
     mean, std = preprocess.get_dataset_mean_std()
-    train_dataset, test_dataset, train_loader, test_loader = preprocess.preprocess_data((mean[0], mean[1], mean[2]),
-                                                                                        (std[0], std[1], std[2]))
+    if args.use_albumentations:
+        train_dataset, test_dataset, train_loader, test_loader = \
+            preprocess.preprocess_data_albumentations((mean[0], mean[1], mean[2]),(std[0], std[1], std[2]))
+    else:
+        train_dataset, test_dataset, train_loader, test_loader = \
+            preprocess.preprocess_data((mean[0], mean[1], mean[2]), (std[0], std[1], std[2]))
+
     preprocess.get_data_stats(train_dataset, test_dataset, train_loader)
     utils.plot_train_samples(train_loader)
     L1 = args.L1
@@ -91,8 +97,12 @@ def main_s7_custom_model():
     print("The config used for this run are being saved @ {}".format(os.path.join(args.prefix, 'config_params.txt')))
     utils.write(vars(args), os.path.join(args.prefix, 'config_params.txt'))
     mean, std = preprocess.get_dataset_mean_std()
-    train_dataset, test_dataset, train_loader, test_loader = preprocess.preprocess_data((mean[0], mean[1], mean[2]),
-                                                                                        (std[0], std[1], std[2]))
+    if args.use_albumentations:
+        train_dataset, test_dataset, train_loader, test_loader = \
+            preprocess.preprocess_data_albumentations((mean[0], mean[1], mean[2]),(std[0], std[1], std[2]))
+    else:
+        train_dataset, test_dataset, train_loader, test_loader = \
+            preprocess.preprocess_data((mean[0], mean[1], mean[2]), (std[0], std[1], std[2]))
     preprocess.get_data_stats(train_dataset, test_dataset, train_loader)
     utils.plot_train_samples(train_loader)
     L1 = args.L1
