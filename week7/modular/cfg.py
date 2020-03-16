@@ -18,7 +18,7 @@ parser.add_argument('--cmd', default='test', choices=['train', 'test'])
 parser.add_argument('--IPYNB_ENV', default=True, type=bool, help='Is this ipynb environment?')
 parser.add_argument('--use_albumentations', default=True, type=bool, help='Use Albumentations based img-aug methods?')
 parser.add_argument('--SEED', '-S', default=1, type=int, help='Random Seed')
-parser.add_argument('--dataset', '-D', default='MNIST', type=str, help='Dataset--CIFAR10, MNIST, or...')
+parser.add_argument('--dataset', '-D', default='CIFAR10', type=str, help='Dataset--CIFAR10, MNIST, or...')
 parser.add_argument('--batch_size', '-b', default=64, type=int, help='batch size')
 parser.add_argument('--epochs', '-e', default=8, type=int, help='training epochs')
 #Below (lr=0.01) was the default for the custom model architecture used for S7
@@ -26,7 +26,7 @@ parser.add_argument('--epochs', '-e', default=8, type=int, help='training epochs
 #Below (lr=0.0006) was the default for the ResNet18 used for S8
 parser.add_argument('--lr', default=0.0006, type=float, help='learning rate')
 parser.add_argument('--cuda', default=torch.cuda.is_available(), type=bool, help='use gpu or not')
-parser.add_argument('--dropout', '-d', default=0.05, type=float, help='dropout percentage for all layers')
+parser.add_argument('--dropout', '-d', default=0.08, type=float, help='dropout percentage for all layers')
 parser.add_argument('--l1_weight', default=0.000025, type=float, help='L1-penalty value')
 parser.add_argument('--l2_weight_decay', default=0.0002125, type=float, help='L2-penalty/weight_decay value')
 parser.add_argument('--L1', default=True, type=bool, help='L1-penalty to be used or not?')

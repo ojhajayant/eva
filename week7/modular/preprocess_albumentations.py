@@ -16,7 +16,8 @@ from torchvision import datasets
 from torchvision.datasets import CIFAR10, MNIST
 from albumentations import Compose, RandomCrop, Normalize, HorizontalFlip
 from albumentations.pytorch.transforms import ToTensorV2
-from albumentations.augmentations.transforms import ToFloat,CoarseDropout, ElasticTransform
+from albumentations.augmentations.transforms import ToFloat, CoarseDropout, ElasticTransform
+from albumentations.pytorch import ToTensor
 
 from week7.modular import cfg
 
@@ -29,6 +30,40 @@ file_path = args.data
 
 
 # IPYNB_ENV = True  # By default ipynb notebook env
+# Thanks to Harsha V (EVA4 group) for the piece below!
+class album_Compose:
+    def __init__(self,
+                 train=True,
+                 mean=[0.49139968, 0.48215841, 0.44653091],
+                 std=[0.24703223, 0.24348513, 0.26158784]
+                 ):
+        if train:
+            self.albumentattions_transform = Compose([
+                RandomCrop(height=32, width=32, always_apply=True),
+                # ElasticTransform(),
+                HorizontalFlip(p=0.5),
+                Normalize(mean=mean,
+                          std=std),
+                CoarseDropout(max_holes=8,
+                              max_height=16,
+                              max_width=16,
+                              min_holes=1,
+                              min_height=1,
+                              min_width=1,
+                              fill_value=mean, always_apply=False),
+                ToTensorV2()
+            ])
+        else:
+            self.albumentattions_transform = Compose([
+                Normalize(mean=mean,
+                          std=std),
+                ToTensorV2()
+            ])
+
+    def __call__(self, img):
+        img = np.array(img)
+        img = self.albumentattions_transform(image=img)['image']
+        return img
 
 
 def preprocess_data_albumentations(mean_tuple, std_tuple):
@@ -38,34 +73,22 @@ def preprocess_data_albumentations(mean_tuple, std_tuple):
     """
     # Train Phase transformations
     global args
-    train_transforms = Compose([
-        ToFloat(),
-        RandomCrop(height=32, width=32, always_apply=True),
-        CoarseDropout(max_holes=8,
-                      max_height=16,
-                      max_width=16,
-                      min_holes=0,
-                      min_height=0,
-                      min_width=0,
-                      fill_value=mean_tuple, always_apply=True),
-        ElasticTransform(),
-        HorizontalFlip(p=0.5),
-        ToTensorV2(),
-        Normalize(mean=mean_tuple, std=std_tuple),
-    ])
+    # tensor_args1 = dict(always_apply=True, p=1.0)
+    tensor_args2 = dict(num_classes=1, sigmoid=True, normalize=None)
+    norm_args = dict(mean=mean_tuple, std=std_tuple, max_pixel_value=255.0, always_apply=False, p=1.0)
+    train_transforms = album_Compose(train=True, mean=mean_tuple, std=std_tuple)
 
     # Test Phase transformations
-    test_transforms = Compose([
-        ToFloat(),
-        ToTensorV2(),
-        Normalize(mean=mean_tuple, std=std_tuple),
-    ])
+    test_transforms = album_Compose(train=False, mean=mean_tuple, std=std_tuple)
+
+    train_kwargs = dict(train=True, download=True, transform=train_transforms)
+    test_kwargs = dict(train=False, download=True, transform=test_transforms)
     if args.dataset == 'CIFAR10':
-        train_dataset = datasets.CIFAR10(file_path, train=True, download=True, transform=train_transforms)
-        test_dataset = datasets.CIFAR10(file_path, train=False, download=True, transform=test_transforms)
+        train_dataset = datasets.CIFAR10(file_path, **train_kwargs)
+        test_dataset = datasets.CIFAR10(file_path, **test_kwargs)
     elif args.dataset == 'MNIST':
-        train_dataset = datasets.MNIST(file_path, train=True, download=True, transform=train_transforms)
-        test_dataset = datasets.MNIST(file_path, train=False, download=True, transform=test_transforms)
+        train_dataset = datasets.MNIST(file_path, **train_kwargs)
+        test_dataset = datasets.MNIST(file_path, **test_kwargs)
 
     print("CUDA Available?", args.cuda)
 
