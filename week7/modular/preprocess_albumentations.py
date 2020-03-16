@@ -44,20 +44,20 @@ class album_Compose:
                 HorizontalFlip(p=0.5),
                 Normalize(mean=mean,
                           std=std),
-                CoarseDropout(max_holes=8,
-                              max_height=8,
-                              max_width=8,
+                CoarseDropout(max_holes=1,
+                              max_height=12,
+                              max_width=12,
                               min_holes=1,
-                              min_height=1,
-                              min_width=1,
-                              fill_value=mean, always_apply=False),
-                ToTensorV2()
+                              min_height=6,
+                              min_width=6,
+                              fill_value=mean, always_apply=False, p=0.1),
+                ToTensorV2(),
             ])
         else:
             self.albumentattions_transform = Compose([
                 Normalize(mean=mean,
                           std=std),
-                ToTensorV2()
+                ToTensorV2(),
             ])
 
     def __call__(self, img):
@@ -76,6 +76,7 @@ def preprocess_data_albumentations(mean_tuple, std_tuple):
     # tensor_args1 = dict(always_apply=True, p=1.0)
     tensor_args2 = dict(num_classes=1, sigmoid=True, normalize=None)
     norm_args = dict(mean=mean_tuple, std=std_tuple, max_pixel_value=255.0, always_apply=False, p=1.0)
+    print("************")
     train_transforms = album_Compose(train=True, mean=mean_tuple, std=std_tuple)
 
     # Test Phase transformations
