@@ -154,7 +154,7 @@ def show_gradcam(model, device, x_test, y_test, y_pred, test_dataset, mean_tuple
     NUM_DISP = disp_nums
     for _ in range(NUM_DISP):
         fig = plt.figure(figsize=fig_size)
-        outer = gridspec.GridSpec(1, len(class_names), wspace=0.2, hspace=0.2)
+        outer = gridspec.GridSpec(1, len(class_names))#, wspace=0.2, hspace=0.2)
         for i in range(len(class_names)):
             inner = gridspec.GridSpecFromSubplotSpec(2, 1,
                                                      subplot_spec=outer[i], wspace=0.1, hspace=0.1)
@@ -196,6 +196,7 @@ def show_gradcam(model, device, x_test, y_test, y_pred, test_dataset, mean_tuple
                     _ = ax.imshow(im_orig)
                 else:
                     _ = ax.imshow(np.transpose(result_pp, (1, 2, 0)))
+                    # _ = ax.imshow(np.transpose(result, (1, 2, 0)))
                 _ = fig.add_subplot(ax)
         if not args.IPYNB_ENV:
             fig.savefig(filepath)
