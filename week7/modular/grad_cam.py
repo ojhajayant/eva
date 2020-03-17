@@ -2,7 +2,9 @@ import sys
 import warnings
 
 import cv2
-
+import torch
+import torch.nn.functional as F
+import numpy as np
 from week7.modular import cfg
 from week7.modular import utils
 from week7.modular.models import resnet18
@@ -291,20 +293,20 @@ if __name__ == '__main__':
     import torch.nn.functional as F
     from torchvision.utils import make_grid, save_image
 
-    #Load image
+    # Load image
     img_dir = './data'
     img_name = 'water-bird.JPEG'
     img_path = os.path.join(img_dir, img_name)
     pil_img = PIL.Image.open(img_path)
     pil_img
 
-    #preprocess image
+    # preprocess image
     normalizer = Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     torch_img = torch.from_numpy(np.asarray(pil_img)).permute(2, 0, 1).unsqueeze(0).float().div(255).cuda()
     torch_img = F.upsample(torch_img, size=(32, 32), mode='bilinear', align_corners=False)
     normed_torch_img = normalizer(torch_img)
 
-    #Load torchvision models and make model dictionaries
+    # Load torchvision models and make model dictionaries
     device = torch.device("cuda" if args.cuda else "cpu")
     model_name = 'CIFAR10_model_epoch-30_L1-1_L2-0_val_acc-88.03.h5'
     print("Loaded the best model: {} from last training session".format(model_name))
@@ -317,7 +319,7 @@ if __name__ == '__main__':
     resnet_gradcampp = GradCAMpp(resnet_model_dict, True)
     cam_dict['resnet'] = [resnet_gradcam, resnet_gradcampp]
 
-    #Feedforward image, calculate GradCAM/GradCAM++, and gather results
+    # Feedforward image, calculate GradCAM/GradCAM++, and gather results
     images = []
     for gradcam, gradcam_pp in cam_dict.values():
         mask, _ = gradcam(normed_torch_img)
@@ -327,12 +329,10 @@ if __name__ == '__main__':
         images.append(torch.stack([torch_img.squeeze().cpu(), heatmap, heatmap_pp, result, result_pp], 0))
     images = make_grid(torch.cat(images, 0), nrow=5)
 
-    #Save and show results
+    # Save and show results
     output_dir = './data'
     os.makedirs(output_dir, exist_ok=True)
     output_name = img_name
     output_path = os.path.join(output_dir, output_name)
     save_image(images, output_path)
     PIL.Image.open(output_path)
-
-
