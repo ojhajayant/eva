@@ -1,7 +1,7 @@
 
 Please refer [this notebook](https://github.com/ojhajayant/eva/blob/master/week9/S9_assignment.ipynb) for the code.
 
-final accuracy of your model = 88.03%
+final accuracy of the model = 88.03%
 
 Logs:
 ```
