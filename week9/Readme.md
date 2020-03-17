@@ -1,5 +1,6 @@
 
 Please refer [this notebook](https://github.com/ojhajayant/eva/blob/master/week9/S9_assignment.ipynb) for the code.
+Different packages are being maintained @ [this link.](https://github.com/ojhajayant/eva/tree/master/week7/modular)
 
 final accuracy of the model = 88.03%
 
