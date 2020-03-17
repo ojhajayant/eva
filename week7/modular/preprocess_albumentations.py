@@ -41,7 +41,7 @@ class album_Compose:
             self.albumentattions_transform = Compose([
                 PadIfNeeded(min_height=32, min_width=32, border_mode=0, value=[0, 0, 0], always_apply=True),
                 # Cutout(num_holes=3, max_h_size=4, max_w_size=4, p=0.5),
-                CoarseDropout(num_holes=3, max_h_size=4, max_w_size=4, p=0.5),
+                CoarseDropout(max_holes=8, max_h_size=4, max_w_size=4, p=0.5),
                 # ElasticTransform()
                 HorizontalFlip(p=0.5),
                 RandomCrop(height=32, width=32, always_apply=True),
