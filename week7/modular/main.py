@@ -30,7 +30,6 @@ from week7.modular import train
 from week7.modular import utils
 
 sys.path.append('./')
-# args = cfg.parser.parse_args(args=[])
 global args
 args = cfg.args
 if args.cmd == None:
@@ -51,14 +50,15 @@ def main_s8_resnet():
     print("The config used for this run are being saved @ {}".format(os.path.join(args.prefix, 'config_params.txt')))
     utils.write(vars(args), os.path.join(args.prefix, 'config_params.txt'))
     mean, std = preprocess.get_dataset_mean_std()
+    mean_tuple = (mean[0], mean[1], mean[2])
+    std_tuple = (std[0], std[1], std[2])
     if args.use_albumentations:
         print("Using albumentation lib for image-augmentation & other transforms")
         train_dataset, test_dataset, train_loader, test_loader = \
-            preprocess_albumentations.preprocess_data_albumentations((mean[0], mean[1], mean[2]),
-                                                                     (std[0], std[1], std[2]))
+            preprocess_albumentations.preprocess_data_albumentations(mean_tuple, std_tuple)
     else:
         train_dataset, test_dataset, train_loader, test_loader = \
-            preprocess.preprocess_data((mean[0], mean[1], mean[2]), (std[0], std[1], std[2]))
+            preprocess.preprocess_data(mean_tuple, std_tuple)
 
     preprocess.get_data_stats(train_dataset, test_dataset, train_loader)
     utils.plot_train_samples(train_loader)
@@ -79,7 +79,8 @@ def main_s8_resnet():
         else:
             weight_decay = 0
         # lr = args.lr
-        lr = 0.0006
+        lr = 0.008
+        # lr = 0.0006
         optimizer = optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=weight_decay)
 
         EPOCHS = args.epochs
@@ -91,7 +92,7 @@ def main_s8_resnet():
     elif args.cmd == 'test':
         print("Model inference starts on {}  dataset".format(args.dataset))
         # model_name = args.best_model
-        model_name = 'CIFAR10_model_epoch-8_L1-1_L2-0_val_acc-81.91.h5'
+        model_name = 'CIFAR10_model_epoch-30_L1-1_L2-0_val_acc-88.03.h5'
         print("Loaded the best model: {} from last training session".format(model_name))
         # model = utils.load_model(network.Net(), device, model_name=model_name)#Custom Model used in S7
         model = utils.load_model(resnet18.ResNet18(), device, model_name=model_name)
@@ -101,6 +102,8 @@ def main_s8_resnet():
         x_test = test_dataset.data
         utils.display_mislabelled(model, device, x_test, y_test.reshape(-1, 1), y_pred, test_dataset,
                                   title_str='Predicted Vs Actual With L1')
+        utils.show_gradcam(model, device, x_test, y_test, y_pred, test_dataset, mean_tuple, std_tuple, layer='layer3',
+                           disp_nums=5, fig_size=(40, 40), size=(32, 32), model_type='resnet')
 
 
 def main_s7_custom_model():
@@ -269,6 +272,7 @@ def main_QuizDNN_model():
                                   title_str='Predicted Vs Actual With L1')
 
 
+
 if __name__ == '__main__':
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
@@ -285,7 +289,7 @@ if __name__ == '__main__':
     # main_s7_custom_model()
     # --------
     args.dataset = 'CIFAR10'
-    args.cmd = 'train'
+    args.cmd = 'test'
     args.IPYNB_ENV = 'False'
     args.epochs = 40
     args.use_albumentations = True

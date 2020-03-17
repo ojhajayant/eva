@@ -9,23 +9,16 @@ import os
 import shutil
 import sys
 
-import os
-import PIL
-import numpy as np
-import torch
-import torch.nn.functional as F
-import torchvision.models as models
-from torchvision.utils import make_grid, save_image
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
+import torch.nn.functional as F
 from sklearn.metrics import confusion_matrix, classification_report
 
 from week7.modular import cfg
 from week7.modular import grad_cam
 
 sys.path.append('./')
-# args = cfg.parser.parse_args(args=[])
 global args
 args = cfg.args
 file_path = args.data
@@ -143,26 +136,21 @@ def display_mislabelled(model, device, x_test, y_test, y_pred, test_dataset, tit
         plt.show()
 
 
-
-import os
-import PIL
-import numpy as np
-import torch
-import torch.nn.functional as F
-import torchvision.models as models
-from torchvision.utils import make_grid, save_image
-
-
-
 def orig_img(norm_img, mean_tuple, std_tuple):
     for i in range(norm_img.shape[0]):
         norm_img[i] = (norm_img[i] * std_tuple[i]) + mean_tuple[i]
     return np.transpose(norm_img, (1, 2, 0))
 
 
-def show_gradcam(model, device, x_test, y_test, y_pred, test_dataset, mean_tuple, std_tuple, class_names, title_str, layer_name="block5_pool",
-                 disp_nums=5, fig_size=(40, 40), size=(32, 32), model_type='resnet', layer='layer3'):
+def show_gradcam(model, device, x_test, y_test, y_pred, test_dataset, mean_tuple, std_tuple, layer='layer3',
+                 disp_nums=5, fig_size=(40, 40), size=(32, 32), model_type='resnet'):
     import matplotlib.gridspec as gridspec
+    save_dir = os.path.join(os.getcwd(), args.data)
+    file_name = 'grad_cam'
+    if not os.path.isdir(save_dir):
+        os.makedirs(save_dir)
+    filepath = os.path.join(save_dir, '{}.png'.format(file_name))
+    class_names = test_dataset.classes
     NUM_DISP = disp_nums
     for _ in range(NUM_DISP):
         fig = plt.figure(figsize=fig_size)
@@ -173,9 +161,10 @@ def show_gradcam(model, device, x_test, y_test, y_pred, test_dataset, mean_tuple
             idx = np.where(y_test[:] == i)[0]
             features_idx = x_test[idx, ::]
             img_num = np.random.randint(features_idx.shape[0])
-            im_norm = features_idx[img_num]
-            im_orig = orig_img(im_norm, mean_tuple, std_tuple)
-            normalizer = Normalize(mean=list(mean_tuple), std=list(std_tuple))#Pick this routine from grad_cam module
+            im_orig = features_idx[img_num]
+            # im_orig = orig_img(im_norm, mean_tuple, std_tuple)
+            normalizer = grad_cam.Normalize(mean=list(mean_tuple),
+                                            std=list(std_tuple))  # Pick this routine from grad_cam module
             torch_img = torch.from_numpy(np.asarray(im_orig)).permute(2, 0, 1).unsqueeze(0).float().div(255).cuda()
             torch_img = F.upsample(torch_img, size=size, mode='bilinear', align_corners=False)
             normed_torch_img = normalizer(torch_img)
@@ -184,30 +173,35 @@ def show_gradcam(model, device, x_test, y_test, y_pred, test_dataset, mean_tuple
             cam_dict = dict()
 
             model_dict = dict(type=model_type, arch=model, layer_name=layer, input_size=size)
-            model_gradcam = GradCAM(model_dict, True)
-            model_gradcampp = GradCAMpp(model_dict, True)
+            model_gradcam = grad_cam.GradCAM(model_dict, True)
+            model_gradcampp = grad_cam.GradCAMpp(model_dict, True)
             cam_dict[model_type] = [model_gradcam, model_gradcampp]
 
             # Feedforward image, calculate GradCAM/GradCAM++, and gather results
             images = []
             for gradcam, gradcam_pp in cam_dict.values():
                 mask, _ = gradcam(normed_torch_img)
-                heatmap, result = visualize_cam(mask, torch_img)
+                heatmap, result = grad_cam.visualize_cam(mask, torch_img)
                 mask_pp, _ = gradcam_pp(normed_torch_img)
-                heatmap_pp, result_pp = visualize_cam(mask_pp, torch_img)
+                heatmap_pp, result_pp = grad_cam.visualize_cam(mask_pp, torch_img)
             for j in range(2):
                 ax = plt.Subplot(fig, inner[j])
                 if args.dataset == 'CIFAR10':
                     _ = ax.set_title('Act:{} '.format(test_dataset.classes[int(i)]) + ' Pred:{} '.format(
                         test_dataset.classes[int(y_pred[idx[img_num]][0])]), fontsize=24)
                 elif args.dataset == 'MNIST':
-                    _ = ax.set_title('Act:{} '.format(i) + ' Pred:{} '.format(int(y_pred[idx[img_num]][0])), fontsize=20)
+                    _ = ax.set_title('Act:{} '.format(i) + ' Pred:{} '.format(int(y_pred[idx[img_num]][0])),
+                                     fontsize=20)
                 if j == 0:
                     _ = ax.imshow(im_orig)
                 else:
-                    _ = ax.imshow(result_pp)
+                    _ = ax.imshow(np.transpose(result_pp, (1, 2, 0)))
                 _ = fig.add_subplot(ax)
-        fig.show()
+        if not args.IPYNB_ENV:
+            fig.savefig(filepath)
+        else:
+            fig.show()
+
 
 
 def load_model(describe_model_nn, device, model_name):

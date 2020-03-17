@@ -6,23 +6,18 @@ https://github.com/albumentations-team/albumentations
 """
 from __future__ import print_function
 
-import os
 import sys
 
-import matplotlib.pyplot as plt
 import numpy as np
 import torch
-from torchvision import datasets
-from torchvision.datasets import CIFAR10, MNIST
-from albumentations import Compose, RandomCrop, Normalize, HorizontalFlip
-from albumentations.pytorch.transforms import ToTensorV2
-from albumentations.augmentations.transforms import ToFloat, CoarseDropout, ElasticTransform, PadIfNeeded, Cutout
+from albumentations import Compose, RandomCrop, HorizontalFlip
+from albumentations.augmentations.transforms import ToFloat, CoarseDropout, PadIfNeeded
 from albumentations.pytorch import ToTensor
+from torchvision import datasets
 
 from week7.modular import cfg
 
 sys.path.append('./')
-# args = cfg.parser.parse_args(args=[])
 global args
 args = cfg.args
 
@@ -47,11 +42,13 @@ class album_Compose:
                 RandomCrop(height=32, width=32, always_apply=True),
                 ToFloat(max_value=None, always_apply=True),
                 ToTensor(normalize={'mean': list(mean), 'std': list(std)}),
+                # ToTensorV2(normalize={'mean': list(mean), 'std': list(std)}),
             ])
         else:
             self.albumentattions_transform = Compose([
                 ToFloat(max_value=None, always_apply=True),
                 ToTensor(normalize={'mean': list(mean), 'std': list(std)}),
+                # ToTensorV2(normalize={'mean': list(mean), 'std': list(std)}),
             ])
 
     def __call__(self, img):

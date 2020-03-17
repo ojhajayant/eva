@@ -11,12 +11,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 from torchvision import datasets, transforms
-from torchvision.datasets import CIFAR10, MNIST
 
 from week7.modular import cfg
 
 sys.path.append('./')
-# args = cfg.parser.parse_args(args=[])
 global args
 args = cfg.args
 

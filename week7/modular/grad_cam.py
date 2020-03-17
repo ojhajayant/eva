@@ -1,40 +1,18 @@
-import torch
-import torch.nn.functional as F
-
-import cv2
-import numpy as np
-import torch
-
-import os
 import sys
 import warnings
 
-import numpy as np
-import torch
-import torch.optim as optim
-from torchsummary import summary
+import cv2
 
 from week7.modular import cfg
-from week7.modular.models import resnet18, s5_s6_custom_model_mnist, s7_custom_model_cifar10, QuizDNN
-from week7.modular import preprocess
-from week7.modular import preprocess_albumentations
-from week7.modular import test
-from week7.modular import train
 from week7.modular import utils
+from week7.modular.models import resnet18
 
 sys.path.append('./')
-# args = cfg.parser.parse_args(args=[])
 global args
 args = cfg.args
-if args.cmd == None:
-    args.cmd = 'train'
+file_path = args.data
 
 import sys
-
-import torch.nn as nn
-import torch.nn.functional as F
-
-from week7.modular import cfg
 
 sys.path.append('./')
 
@@ -311,7 +289,6 @@ if __name__ == '__main__':
     import numpy as np
     import torch
     import torch.nn.functional as F
-    import torchvision.models as models
     from torchvision.utils import make_grid, save_image
 
     #Load image
