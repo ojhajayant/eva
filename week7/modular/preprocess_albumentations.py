@@ -16,7 +16,7 @@ from torchvision import datasets
 from torchvision.datasets import CIFAR10, MNIST
 from albumentations import Compose, RandomCrop, Normalize, HorizontalFlip
 from albumentations.pytorch.transforms import ToTensorV2
-from albumentations.augmentations.transforms import ToFloat, CoarseDropout, ElasticTransform
+from albumentations.augmentations.transforms import ToFloat, CoarseDropout, ElasticTransform, PadIfNeeded, Cutout
 from albumentations.pytorch import ToTensor
 
 from week7.modular import cfg
@@ -39,25 +39,21 @@ class album_Compose:
                  ):
         if train:
             self.albumentattions_transform = Compose([
-                RandomCrop(height=32, width=32, always_apply=True),
-                # ElasticTransform(),
+                PadIfNeeded(min_height=32, min_width=32, border_mode=0, value=[0, 0, 0], always_apply=True),
+                # Cutout(num_holes=3, max_h_size=4, max_w_size=4, p=0.5),
+                CoarseDropout(num_holes=3, max_h_size=4, max_w_size=4, p=0.5),
+                # ElasticTransform()
                 HorizontalFlip(p=0.5),
-                Normalize(mean=mean,
-                          std=std),
-                CoarseDropout(max_holes=1,
-                              max_height=12,
-                              max_width=12,
-                              min_holes=1,
-                              min_height=6,
-                              min_width=6,
-                              fill_value=mean, always_apply=False, p=0.1),
-                ToTensorV2(),
+                RandomCrop(height=32, width=32, always_apply=True),
+                ToFloat(max_value=None, always_apply=True),
+                # ToTensor(normalize={'mean': list(mean), 'std': list(std)}),
+                ToTensorV2(normalize={'mean': list(mean), 'std': list(std)}),
             ])
         else:
             self.albumentattions_transform = Compose([
-                Normalize(mean=mean,
-                          std=std),
-                ToTensorV2(),
+                ToFloat(max_value=None, always_apply=True),
+                # ToTensor(normalize={'mean': list(mean), 'std': list(std)}),
+                ToTensorV2(normalize={'mean': list(mean), 'std': list(std)}),
             ])
 
     def __call__(self, img):
