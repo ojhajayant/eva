@@ -143,7 +143,7 @@ def orig_img(norm_img, mean_tuple, std_tuple):
 
 
 def show_gradcam(model, device, x_test, y_test, y_pred, test_dataset, mean_tuple, std_tuple, layer='layer3',
-                 disp_nums=5, fig_size=(40, 40), size=(32, 32), model_type='resnet'):
+                 disp_nums=3, fig_size=(130, 20), size=(32, 32), model_type='resnet'):
     import matplotlib.gridspec as gridspec
     save_dir = os.path.join(os.getcwd(), args.data)
     file_name = 'grad_cam'
@@ -154,7 +154,7 @@ def show_gradcam(model, device, x_test, y_test, y_pred, test_dataset, mean_tuple
     NUM_DISP = disp_nums
     for _ in range(NUM_DISP):
         fig = plt.figure(figsize=fig_size)
-        outer = gridspec.GridSpec(1, len(class_names))#, wspace=0.2, hspace=0.2)
+        outer = gridspec.GridSpec(1, len(class_names), wspace=0.2, hspace=0.2)
         for i in range(len(class_names)):
             inner = gridspec.GridSpecFromSubplotSpec(2, 1,
                                                      subplot_spec=outer[i], wspace=0.1, hspace=0.1)
@@ -186,12 +186,14 @@ def show_gradcam(model, device, x_test, y_test, y_pred, test_dataset, mean_tuple
                 heatmap_pp, result_pp = grad_cam.visualize_cam(mask_pp, torch_img)
             for j in range(2):
                 ax = plt.Subplot(fig, inner[j])
+                ax.get_xaxis().set_visible(False)
+                ax.get_yaxis().set_visible(False)
                 if args.dataset == 'CIFAR10':
                     _ = ax.set_title('Act:{} '.format(test_dataset.classes[int(i)]) + ' Pred:{} '.format(
-                        test_dataset.classes[int(y_pred[idx[img_num]][0])]), fontsize=24)
+                        test_dataset.classes[int(y_pred[idx[img_num]][0])]), fontsize=48)
                 elif args.dataset == 'MNIST':
                     _ = ax.set_title('Act:{} '.format(i) + ' Pred:{} '.format(int(y_pred[idx[img_num]][0])),
-                                     fontsize=20)
+                                     fontsize=48)
                 if j == 0:
                     _ = ax.imshow(im_orig)
                 else:
@@ -202,7 +204,6 @@ def show_gradcam(model, device, x_test, y_test, y_pred, test_dataset, mean_tuple
             fig.savefig(filepath)
         else:
             fig.show()
-
 
 
 def load_model(describe_model_nn, device, model_name):
