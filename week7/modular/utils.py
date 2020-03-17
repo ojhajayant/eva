@@ -173,8 +173,8 @@ def show_gradcam(model, device, x_test, y_test, y_pred, test_dataset, mean_tuple
             cam_dict = dict()
 
             model_dict = dict(type=model_type, arch=model, layer_name=layer, input_size=size)
-            model_gradcam = grad_cam.GradCAM(model_dict, True)
-            model_gradcampp = grad_cam.GradCAMpp(model_dict, True)
+            model_gradcam = grad_cam.GradCAM(model_dict, False)
+            model_gradcampp = grad_cam.GradCAMpp(model_dict, False)
             cam_dict[model_type] = [model_gradcam, model_gradcampp]
 
             # Feedforward image, calculate GradCAM/GradCAM++, and gather results
