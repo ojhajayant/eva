@@ -46,14 +46,12 @@ class album_Compose:
                 HorizontalFlip(p=0.5),
                 RandomCrop(height=32, width=32, always_apply=True),
                 ToFloat(max_value=None, always_apply=True),
-                # ToTensor(normalize={'mean': list(mean), 'std': list(std)}),
-                ToTensorV2(normalize={'mean': list(mean), 'std': list(std)}),
+                ToTensor(normalize={'mean': list(mean), 'std': list(std)}),
             ])
         else:
             self.albumentattions_transform = Compose([
                 ToFloat(max_value=None, always_apply=True),
-                # ToTensor(normalize={'mean': list(mean), 'std': list(std)}),
-                ToTensorV2(normalize={'mean': list(mean), 'std': list(std)}),
+                ToTensor(normalize={'mean': list(mean), 'std': list(std)}),
             ])
 
     def __call__(self, img):
