@@ -215,11 +215,13 @@ Here are 3 groups of mislabelled 10-class samples from the test-dataset:
 
 ![alt text](https://github.com/ojhajayant/eva/blob/master/week9/mislabelled.PNG "Logo Title Text 1")
 
-@ Resnet18-Layering 
+@ Resnet18-Layering :
+
+
 ![alt text](https://github.com/ojhajayant/eva/blob/master/week9/model_stacking.png "Logo Title Text 1")
 ![alt text](https://github.com/ojhajayant/eva/blob/master/week9/model_layers.png "Logo Title Text 1")
 
-Here are 3 groups of class-wise grad-cams @ Resnet18-layer2, for 10-class samples from the test-dataset:
+Here are 3 groups of class-wise grad-cams @ Resnet18-layer-4, for 10-class samples from the test-dataset:
 
 ![alt text](https://github.com/ojhajayant/eva/blob/master/week9/grad_cam_cifar10.PNG "Logo Title Text 1")
 
