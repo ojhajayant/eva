@@ -202,3 +202,26 @@ validation-accuracy improved from 87.63 to 88.03, saving model to D:\PG-ML\eva4\
 ```
 
 The ResNet18 model has been taken from [this link](https://github.com/kuangliu/pytorch-cifar/blob/master/models/resnet.py).
+
+Here is the loss & accuracy plots for train/test:
+
+![alt text](https://github.com/ojhajayant/eva/blob/master/week9/acc_loss.PNG "Logo Title Text 1")
+
+Here are example confusion-matrix and classification-report:
+
+![alt text](https://github.com/ojhajayant/eva/blob/master/week9/classification_report.PNG "Logo Title Text 1")
+
+Here are 3 groups of mislabelled 10-class samples from the test-dataset:
+
+![alt text](https://github.com/ojhajayant/eva/blob/master/week9/mislabelled.PNG "Logo Title Text 1")
+
+@ Resnet18-Layering 
+![alt text](https://github.com/ojhajayant/eva/blob/master/week9/model_stacking.png "Logo Title Text 1")
+![alt text](https://github.com/ojhajayant/eva/blob/master/week9/model_layers.png "Logo Title Text 1")
+
+Here are 3 groups of class-wise grad-cams @ Resnet18-layer2, for 10-class samples from the test-dataset:
+
+![alt text](https://github.com/ojhajayant/eva/blob/master/week9/grad_cam_cifar10.PNG "Logo Title Text 1")
+
+
+
