@@ -322,6 +322,18 @@ def load_acc_loss(test_loss_file_name, test_acc_file_name):
     return loaded_test_losses, loaded_test_acc
 
 
+def plot_acc():
+    """
+    Plot both accuracy and loss plots.
+    """
+    _= plt.plot(cfg.train_acc)
+    _= plt.plot(cfg.test_acc)
+    _= plt.title('model accuracy')
+    _= plt.ylabel('accuracy')
+    _= plt.xlabel('epoch')
+    _= plt.legend(['train', 'val'], loc='upper left')
+    _= plt.show()
+
 def plot_acc_loss():
     """
     Plot both accuracy and loss plots.
