@@ -1,4 +1,4 @@
-Please refer [this notebook](http://localhost:8888/notebooks/eva4/week10/S10_assignment.ipynb) for the code.
+Please refer [this notebook](https://github.com/ojhajayant/eva/blob/master/week10/S10_assignment.ipynb) for the code.
 Different packages are being maintained @ [this link.](https://github.com/ojhajayant/eva/tree/master/week7/modular)
 
 final accuracy of the model = 89.63%
