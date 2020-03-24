@@ -11,7 +11,7 @@ import sys
 import numpy as np
 import torch
 from albumentations import Compose, RandomCrop, HorizontalFlip
-from albumentations.augmentations.transforms import ToFloat, CoarseDropout, PadIfNeeded
+from albumentations.augmentations.transforms import ToFloat, CoarseDropout, PadIfNeeded, GaussianBlur, VerticalFlip, Rotate
 from albumentations.pytorch import ToTensor
 from torchvision import datasets
 
@@ -36,9 +36,12 @@ class album_Compose:
             self.albumentattions_transform = Compose([
                 PadIfNeeded(min_height=32, min_width=32, border_mode=0, value=[0, 0, 0], always_apply=True),
                 # Cutout(num_holes=3, max_h_size=4, max_w_size=4, p=0.5),
-                CoarseDropout(max_holes=8, max_height=4, max_width=4, p=0.5),
+                CoarseDropout(max_holes=8, max_height=4, max_width=4, p=0.5, fill_value=tuple([x * 255.0 for x in mean])),
                 # ElasticTransform()
                 HorizontalFlip(p=0.5),
+                # VerticalFlip(p=0.5),
+                Rotate(limit=10),
+                # GaussianBlur(p=0.5),
                 RandomCrop(height=32, width=32, always_apply=True),
                 ToFloat(max_value=None, always_apply=True),
                 ToTensor(normalize={'mean': list(mean), 'std': list(std)}),

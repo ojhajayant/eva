@@ -14,7 +14,7 @@ IPYNB_ENV = True #By default ipynb notebook env
 if not IPYNB_ENV:
   plt.switch_backend('agg')
 parser = argparse.ArgumentParser(description='Training and Validation on CIFAR10 Dataset')
-parser.add_argument('--cmd', default='test', choices=['train', 'test'])
+parser.add_argument('--cmd', default='test', choices=['train', 'test', 'lr_find'])
 parser.add_argument('--IPYNB_ENV', default=True, type=bool, help='Is this ipynb environment?')
 parser.add_argument('--use_albumentations', default=True, type=bool, help='Use Albumentations based img-aug methods?')
 parser.add_argument('--SEED', '-S', default=1, type=int, help='Random Seed')

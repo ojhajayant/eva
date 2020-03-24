@@ -206,6 +206,73 @@ def show_gradcam(model, device, x_test, y_test, y_pred, test_dataset, mean_tuple
             fig.show()
 
 
+def show_gradcam_mislabelled(model, device, x_test, y_test, y_pred, test_dataset, mean_tuple, std_tuple, layer='layer3',
+                             disp_nums=3, fig_size=(130, 20), size=(32, 32), model_type='resnet'):
+    import matplotlib.gridspec as gridspec
+    save_dir = os.path.join(os.getcwd(), args.data)
+    file_name = 'grad_cam'
+    if not os.path.isdir(save_dir):
+        os.makedirs(save_dir)
+    filepath = os.path.join(save_dir, '{}.png'.format(file_name))
+    class_names = test_dataset.classes
+    NUM_DISP = disp_nums
+    idx1 = np.where(y_test[:] != y_pred)[0]
+    for _ in range(NUM_DISP):
+        fig = plt.figure(figsize=fig_size)
+        outer = gridspec.GridSpec(1, len(class_names), wspace=0.2, hspace=0.2)
+        for i in range(len(class_names)):
+            inner = gridspec.GridSpecFromSubplotSpec(2, 1,
+                                                     subplot_spec=outer[i], wspace=0.1, hspace=0.1)
+            idx = np.where(y_test[:] == i)[0]
+            intsct = np.intersect1d(idx1, idx)
+            features_idx = x_test[intsct, ::]
+            # features_idx = x_test[idx, ::]
+            img_num = np.random.randint(features_idx.shape[0])
+            im_orig = features_idx[img_num]
+            # im_orig = orig_img(im_norm, mean_tuple, std_tuple)
+            normalizer = grad_cam.Normalize(mean=list(mean_tuple),
+                                            std=list(std_tuple))  # Pick this routine from grad_cam module
+            torch_img = torch.from_numpy(np.asarray(im_orig)).permute(2, 0, 1).unsqueeze(0).float().div(255).cuda()
+            torch_img = F.upsample(torch_img, size=size, mode='bilinear', align_corners=False)
+            normed_torch_img = normalizer(torch_img)
+
+            model.eval(), model.cuda();
+            cam_dict = dict()
+
+            model_dict = dict(type=model_type, arch=model, layer_name=layer, input_size=size)
+            model_gradcam = grad_cam.GradCAM(model_dict, False)
+            model_gradcampp = grad_cam.GradCAMpp(model_dict, False)
+            cam_dict[model_type] = [model_gradcam, model_gradcampp]
+
+            # Feedforward image, calculate GradCAM/GradCAM++, and gather results
+            images = []
+            for gradcam, gradcam_pp in cam_dict.values():
+                mask, _ = gradcam(normed_torch_img)
+                heatmap, result = grad_cam.visualize_cam(mask, torch_img)
+                mask_pp, _ = gradcam_pp(normed_torch_img)
+                heatmap_pp, result_pp = grad_cam.visualize_cam(mask_pp, torch_img)
+            for j in range(2):
+                ax = plt.Subplot(fig, inner[j])
+                ax.get_xaxis().set_visible(False)
+                ax.get_yaxis().set_visible(False)
+                if args.dataset == 'CIFAR10':
+                    _ = ax.set_title('Act:{} '.format(test_dataset.classes[int(i)]) + ' Pred:{} '.format(
+                        test_dataset.classes[int(y_pred[intsct[img_num]][0])]), fontsize=48)
+                elif args.dataset == 'MNIST':
+                    _ = ax.set_title('Act:{} '.format(i) + ' Pred:{} '.format(int(y_pred[intsct[img_num]][0])),
+                                     fontsize=48)
+                if j == 0:
+                    _ = ax.imshow(im_orig)
+                else:
+                    _ = ax.imshow(np.transpose(result_pp, (1, 2, 0)))
+                    # _ = ax.imshow(np.transpose(result, (1, 2, 0)))
+                _ = fig.add_subplot(ax)
+        if not args.IPYNB_ENV:
+            fig.savefig(filepath)
+        else:
+            fig.show()
+
+
 def load_model(describe_model_nn, device, model_name):
     """
     load the best-accuracy model from the given name
